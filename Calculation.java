@@ -1,5 +1,6 @@
 class Calculation{
 public int calculateSum(int n){
+  System.out.println("Adding comments");
 int sum=0;
 for(int i=1;i<=n;i++){
 if(i%3==0||i%5==0){
