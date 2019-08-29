@@ -2,13 +2,13 @@ class Calculation{
 public int calculateSum(int n){
 int sum=0;
 for(int i=1;i<=n;i++){
-if(i%3==0){
+if(i%3==0||i%5==0){
 sum+=i;
 }
 }
 return sum;
 }
-public int squaresDifference(int n){
+public int calculateDifference(int n){
 int sum1=(n*(n+1)*(2*n+1))/6;
 int sum2=0;
 for(int i=1;i<=n;i++){
