@@ -8,7 +8,7 @@ sum+=i;
 }
 return sum;
 }
-public int calculateDifference(int n){
+public int squaresDifference(int n){
 int sum1=(n*(n+1)*(2*n+1))/6;
 int sum2=0;
 for(int i=1;i<=n;i++){
