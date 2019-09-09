@@ -13,6 +13,7 @@ import com.capgemini.busreservation.dto.Transaction;
 public class AdminDaoImpl implements AdminDao{
 	
 	Set<Bus> busList=new HashSet<Bus>();
+	Set<Transaction> transactionList=new HashSet<Transaction>();
 
 	public Bus addBus(Bus b) {
 		// TODO Auto-generated method stub
@@ -59,7 +60,6 @@ public class AdminDaoImpl implements AdminDao{
 				}
 			}
 		}
-		sc.close();
 		return null;
 	}
 

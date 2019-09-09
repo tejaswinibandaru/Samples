@@ -22,6 +22,13 @@ public class BusReservationSystem {
 		System.out.println("6. Get transactions by date");
 	}
 	
+	public static void printCustomerMenu() {
+		System.out.println("1.Book ticket");
+		System.out.println("2.Cancel ticket");
+		System.out.println("3.View Tickets");
+		System.out.println("4.View Ticket By Date");
+	}
+	
 	public static void main(String[] args) {
 		
 		AdminService adminService=new AdminServiceImpl();
@@ -52,7 +59,7 @@ public class BusReservationSystem {
 					System.out.println("Enter the bus type");
 					String busType=scanner.next();
 					try {
-						if(busType!="sleeper"||busType!="semi-Sleeper") {
+						if(!busType.equalsIgnoreCase("sleeper")||!busType.equalsIgnoreCase("semi-sleeper")) {
 							throw new BusException("The type should be sleeper or semi-Sleeper");
 						}
 						else {
@@ -67,7 +74,7 @@ public class BusReservationSystem {
 					System.out.println("Enter the bus class");
 					String busClass=scanner.next();
 					try {
-						if(busClass!="AC"||busClass!="Non-AC") {
+						if(busClass.equalsIgnoreCase("AC")||busClass.equalsIgnoreCase("Non-AC")) {
 							throw new BusException("Class should be AC or Non-AC");
 						}
 						else {
@@ -123,11 +130,11 @@ public class BusReservationSystem {
 				case 2:
 					System.out.println("Enter the bus id to remove");
 					busId=scanner.nextBigInteger();
-					if(adminService.removeBus(busId)==1) {
-						System.out.println("Bus details with bus id "+ busId+ " is removed successfully");
+					if(adminService.removeBus(busId)==0) {
+						System.out.println("No bus with bus id " + busId + "is found");
 					}
 					else {
-						System.out.println("No bus with bus id " + busId + "is found");
+						System.out.println("Bus details with bus id "+ busId+ " is removed successfully");
 					}
 					break;
 				case 3:
@@ -135,19 +142,19 @@ public class BusReservationSystem {
 					busId=scanner.nextBigInteger();
 					bus=adminService.updateBus(busId);
 					if(bus!=null) {
-						System.out.println(adminService.updateBus(busId));
-					}else {
 						System.out.println("No bus with id "+busId+" is found");
+					}else {
+						System.out.println(adminService.updateBus(busId));
 					}
 					break;
 				case 4:
 					System.out.println("Enter the bus id to search: ");
 					busId=scanner.nextBigInteger();
 					bus=adminService.searchBus(busId);
-					if(bus!=null) {
-						System.out.println(bus);
-					}else {
+					if(bus==null) {
 						System.out.println("No bus with id "+busId+ " is found");
+					}else {
+						System.out.println(bus);
 					}
 					break;
 				case 5:
@@ -174,6 +181,7 @@ public class BusReservationSystem {
 			
 		}
 		else if(choice==2) {
+			
 			
 		}
 		else {
