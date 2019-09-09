@@ -2,14 +2,18 @@ package com.capgemini.busreservation.ui;
 
 import java.math.BigInteger;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.capgemini.busreservation.dto.Booking;
 import com.capgemini.busreservation.dto.Bus;
 import com.capgemini.busreservation.exception.BusException;
 import com.capgemini.busreservation.service.AdminService;
 import com.capgemini.busreservation.service.AdminServiceImpl;
+import com.capgemini.busreservation.service.CustomerService;
+import com.capgemini.busreservation.service.CustomerServiceImpl;
 
 public class BusReservationSystem {
 	
@@ -32,6 +36,7 @@ public class BusReservationSystem {
 	public static void main(String[] args) {
 		
 		AdminService adminService=new AdminServiceImpl();
+		CustomerService customerService=new CustomerServiceImpl();
 		//Assuming that we have one admin
 		
 		Scanner scanner=new Scanner(System.in);
@@ -181,6 +186,32 @@ public class BusReservationSystem {
 			
 		}
 		else if(choice==2) {
+			n=1;
+			while(n!=0) {
+				printCustomerMenu();
+				System.out.println("Enter your choice: ");
+				int customer_choice=scanner.nextInt();
+				switch(customer_choice) {
+				case 1:
+					Booking booking=null;
+					customerService.bookTicket(booking);
+					break;
+				case 2:
+					booking=null;
+					customerService.cancelTicket(booking);
+					break;
+				case 3:
+					customerService.viewTicketList();
+					break;
+				case 4:
+					customerService.viewTicket(LocalDate.now());
+					break;
+				default:
+					break;	
+				}
+				System.out.println("Press 1 to continue, 0 to stop");
+				n=scanner.nextInt();
+			}
 			
 			
 		}
