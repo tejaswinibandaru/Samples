@@ -18,7 +18,7 @@ public class CustomerDaoImpl implements CustomerDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	public Integer cancelTicket(Booking b) {
 		// TODO Auto-generated method stub
 		return null;
