@@ -8,6 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.cg.databaseproj.ems.exception.EmployeeException;
 import com.cg.databaseproj.ems.exception.MyException;
@@ -20,13 +24,22 @@ public class EmployeeDao implements IEmployeeDao {
 	private static Connection connection;
 	private PreparedStatement ps;
 	private ResultSet rs;
-	
+	private static Logger myLogger;
+	static{
+	  	
+	  	  Properties props = System.getProperties();
+	  	  String userDir= props.getProperty("user.dir")+"/src/main/resources/";
+	  	  System.out.println("Current working directory is " +userDir);
+	  	  PropertyConfigurator.configure(userDir+"log4j.properties");
+			myLogger=Logger.getLogger("DBUtil.class");
+			}
 	static {
 		try {
 			connection=DBUtil.getConnection();
+			myLogger.info("connection obtained.....");
 		} catch (MyException e) {
 			// TODO Auto-generated catch block
-			System.out.println("connection not established at EmployeeDao");
+			myLogger.error("connection not established at EmployeeDao: "+e);
 		}
 	}
 	
@@ -48,13 +61,13 @@ public class EmployeeDao implements IEmployeeDao {
 			
 			if(rs.next()) {
 				generatedId=BigInteger.valueOf(rs.getLong(1));
-				System.out.println("Auto generated id: "+generatedId);
+				myLogger.info("Auto generated id: "+generatedId);
 			}
 			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error at addEmployee Dao method: "+e.getMessage());
+			myLogger.error("Error at addEmployee Dao method: "+e.getMessage());
 		}
 		finally {
 			if(ps!=null) {
@@ -62,7 +75,7 @@ public class EmployeeDao implements IEmployeeDao {
 					ps.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					System.out.println("Error at addEmployee Dao method:"+e.getMessage());
+					myLogger.error("Error at addEmployee Dao method:"+e.getMessage());
 				}
 			}
 		}
