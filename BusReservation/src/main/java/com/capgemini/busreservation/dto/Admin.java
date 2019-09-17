@@ -10,7 +10,7 @@ public class Admin extends User {
 	}
 
 	public Admin(BigInteger userId, String userName, String password, Character userType, String email,
-			BigInteger phoneNumber, Set<Booking> bookingsList, Set<Bus> busList, Set<Transaction> transactionsList) {
+			BigInteger phoneNumber, Set<Booking> bookingsList, Set<Bus> busList, Set<BusTransaction> transactionsList) {
 		super(userId, userName, password, userType, email, phoneNumber, bookingsList, busList, transactionsList);
 		// TODO Auto-generated constructor stub
 	}

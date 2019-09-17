@@ -3,18 +3,18 @@ package com.capgemini.busreservation.dto;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Transaction {
+public class BusTransaction {
 	
 	private LocalDate date;
 	private Integer availableSeats;
 	private ArrayList<Booking> bookings;
 	private Bus bus;
 	
-	public Transaction() {
+	public BusTransaction() {
 		
 	}
 
-	public Transaction(LocalDate date, Integer availableSeats, ArrayList<Booking> bookings, Bus bus) {
+	public BusTransaction(LocalDate date, Integer availableSeats, ArrayList<Booking> bookings, Bus bus) {
 		super();
 		this.date = date;
 		this.availableSeats = availableSeats;
@@ -73,7 +73,7 @@ public class Transaction {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Transaction other = (Transaction) obj;
+		BusTransaction other = (BusTransaction) obj;
 		if (availableSeats == null) {
 			if (other.availableSeats != null)
 				return false;
@@ -99,7 +99,7 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "Transaction [date=" + date + ", availableSeats=" + availableSeats + ", bookings=" + bookings + ", bus="
+		return "BusTransaction [date=" + date + ", availableSeats=" + availableSeats + ", bookings=" + bookings + ", bus="
 				+ bus + "]";
 	}
 	
