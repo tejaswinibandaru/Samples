@@ -2,7 +2,7 @@ package com.capgemini.busreservation.dto;
 
 import java.math.BigInteger;
 import java.time.DayOfWeek;
-
+import java.util.List;
 import java.util.Set;
 
 public class Bus {
@@ -11,7 +11,7 @@ public class Bus {
 	private String busType;
 	private String busClass;
 	private Integer noOfSeats;
-	private Set<DayOfWeek> dayOfJourney;
+	private List<DayOfWeek> dayOfJourney;
 	private String source;
 	private String destination;
 	private Double cost;
@@ -23,7 +23,7 @@ public class Bus {
 	
 	
 	public Bus(BigInteger busId, String busName, String busType, String busClass, Integer noOfSeats,
-			Set<DayOfWeek> dayOfJourney, String source, String destination, Double cost) {
+			List<DayOfWeek> dayOfJourney, String source, String destination, Double cost) {
 		super();
 		this.busId = busId;
 		this.busName = busName;
@@ -87,12 +87,12 @@ public class Bus {
 	}
 
 
-	public Set<DayOfWeek> getDayOfJourney() {
+	public List<DayOfWeek> getDayOfJourney() {
 		return dayOfJourney;
 	}
 
 
-	public void setDayOfJourney(Set<DayOfWeek> dayOfJourney) {
+	public void setDayOfJourney(List<DayOfWeek> dayOfJourney) {
 		this.dayOfJourney = dayOfJourney;
 	}
 

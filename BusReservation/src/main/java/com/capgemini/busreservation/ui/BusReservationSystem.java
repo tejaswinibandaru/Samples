@@ -14,6 +14,7 @@ import com.capgemini.busreservation.service.AdminService;
 import com.capgemini.busreservation.service.AdminServiceImpl;
 import com.capgemini.busreservation.service.CustomerService;
 import com.capgemini.busreservation.service.CustomerServiceImpl;
+import com.capgemini.busreservation.service.UserService;
 
 public class BusReservationSystem {
 	

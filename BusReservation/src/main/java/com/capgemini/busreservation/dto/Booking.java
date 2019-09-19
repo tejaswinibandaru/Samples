@@ -12,6 +12,7 @@ public class Booking {
 	private ArrayList<Passenger> passengers;
 	private String modeOfPayment;
 	private Double totalCost;
+	p
 	
 	public Booking() {
 		
