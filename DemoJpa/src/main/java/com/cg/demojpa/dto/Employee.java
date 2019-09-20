@@ -1,8 +1,13 @@
 package com.cg.demojpa.dto;
 
+import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,16 +20,26 @@ public class Employee {
 	private String empName;
 	@Column(name="emp_salary")
 	private Double empSalary;
+	@Column(name="joining_date")
+	private Date dateOfJoining;
+	@Embedded
+	private Address address;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Project project;
 	
 	public Employee() {
 		
 	}
 
-	public Employee(Integer empId, String empName, Double empSalary) {
+	public Employee(Integer empId, String empName, Double empSalary, Date dateOfJoining, Address address,
+			Project project) {
 		super();
 		this.empId = empId;
 		this.empName = empName;
 		this.empSalary = empSalary;
+		this.dateOfJoining = dateOfJoining;
+		this.address = address;
+		this.project = project;
 	}
 
 	public Integer getEmpId() {
@@ -51,47 +66,37 @@ public class Employee {
 		this.empSalary = empSalary;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((empId == null) ? 0 : empId.hashCode());
-		result = prime * result + ((empName == null) ? 0 : empName.hashCode());
-		result = prime * result + ((empSalary == null) ? 0 : empSalary.hashCode());
-		return result;
+	public Date getDateOfJoining() {
+		return dateOfJoining;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Employee other = (Employee) obj;
-		if (empId == null) {
-			if (other.empId != null)
-				return false;
-		} else if (!empId.equals(other.empId))
-			return false;
-		if (empName == null) {
-			if (other.empName != null)
-				return false;
-		} else if (!empName.equals(other.empName))
-			return false;
-		if (empSalary == null) {
-			if (other.empSalary != null)
-				return false;
-		} else if (!empSalary.equals(other.empSalary))
-			return false;
-		return true;
+	public void setDateOfJoining(Date dateOfJoining) {
+		this.dateOfJoining = dateOfJoining;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", empName=" + empName + ", empSalary=" + empSalary + "]";
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empSalary=" + empSalary + ", dateOfJoining="
+				+ dateOfJoining + ", address=" + address + ", project=" + project + "]";
 	}
+	
+	
 	
 	
 }
