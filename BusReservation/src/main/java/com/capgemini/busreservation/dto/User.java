@@ -13,14 +13,14 @@ public class User {
 	private BigInteger phoneNumber;
 	private Set<Booking> bookingsList;
 	private Set<Bus> busList;
-	private Set<Transaction> transactionsList;
+	private Set<BusTransaction> transactionsList;
 	
 	public User() {
 		
 	}
 
 	public User(BigInteger userId, String userName, String password, Character userType, String email,
-			BigInteger phoneNumber, Set<Booking> bookingsList, Set<Bus> busList, Set<Transaction> transactionsList) {
+			BigInteger phoneNumber, Set<Booking> bookingsList, Set<Bus> busList, Set<BusTransaction> transactionsList) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -97,11 +97,11 @@ public class User {
 		this.busList = busList;
 	}
 
-	public Set<Transaction> getTransactionsList() {
+	public Set<BusTransaction> getTransactionsList() {
 		return transactionsList;
 	}
 
-	public void setTransactionsList(Set<Transaction> transactionsList) {
+	public void setTransactionsList(Set<BusTransaction> transactionsList) {
 		this.transactionsList = transactionsList;
 	}
 
