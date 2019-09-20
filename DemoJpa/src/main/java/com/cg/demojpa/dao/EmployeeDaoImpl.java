@@ -21,8 +21,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
-		//entityManager.persist(emp.getProject());
-		entityManager.persist(emp);
+		
+		emp.setDept(emp.getDept());
+		Employee employee=entityManager.merge(emp);
+		
+		entityManager.persist(employee);
 		entityTransaction.commit();
 		/*
 		 * for(Employee employee:findAll()) { if(employee==emp) { Employee

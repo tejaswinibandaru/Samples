@@ -10,6 +10,7 @@
 
 		<class>com.cg.demojpa.dto.Employee</class>
 		<class>com.cg.demojpa.dto.Project</class>
+		<class>com.cg.demojpa.dto.Department</class>
 
 		<properties>
 			<!-- The JDBC driver of your database -->
@@ -23,7 +24,7 @@
 			<!-- The database password -->
 			<property name="javax.persistence.jdbc.password"
 				value="admin" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
 	</persistence-unit>

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import com.cg.demojpa.dto.Address;
+import com.cg.demojpa.dto.Department;
 import com.cg.demojpa.dto.Employee;
 import com.cg.demojpa.dto.Project;
 import com.cg.demojpa.service.EmployeeService;
@@ -79,14 +80,25 @@ public class EmployeeMain {
 				proj.setProjId(projId);
 				proj.setProjName(projName);
 				proj.setProjCost(projCost);
+			
 				
+				System.out.println("Enter department id: ");
+				int depId=scanner.nextInt();
 				
+				System.out.println("Enter department name:");
+				String depName=scanner.next();
+				
+				Department dept=new Department();
+				dept.setDeptId(depId);
+				dept.setDeptName(depName);
+
 				emp.setEmpId(id); 
 				emp.setEmpName(name); 
 				emp.setEmpSalary(salary);
 				emp.setDateOfJoining(date);
 				emp.setAddress(address);
 				emp.setProject(proj);
+				emp.setDept(dept);
 				
 				System.out.println(es.addEmployee(emp));
 				System.out.println("----------------------------------------------");
