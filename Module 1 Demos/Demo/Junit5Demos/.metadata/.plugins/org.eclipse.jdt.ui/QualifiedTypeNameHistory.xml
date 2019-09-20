@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.junit.jupiter.api.Disabled"/>
+<fullyQualifiedTypeName name="org.junit.jupiter.api.TestInstance"/>
+<fullyQualifiedTypeName name="org.junit.jupiter.api.TestInstance.Lifecycle"/>
+<fullyQualifiedTypeName name="org.junit.platform.commons.logging.Logger"/>
+<fullyQualifiedTypeName name="java.util.logging.Logger"/>
+<fullyQualifiedTypeName name="org.junit.jupiter.api.BeforeAll"/>
+<fullyQualifiedTypeName name="org.junit.jupiter.api.AfterAll"/>
+<fullyQualifiedTypeName name="org.junit.jupiter.api.Test"/>
+<fullyQualifiedTypeName name="TestLifecycleLogger"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ConcurrentHashMap"/>
+</qualifiedTypeNameHistroy>

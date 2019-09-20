@@ -1,0 +1,14 @@
+@TestInstance(Lifecycle.PER_CLASS)
+interface TestLifecycleLogger {
+
+    static final Logger LOG = Logger.getLogger(TestLifecycleLogger.class.getName());
+
+    @BeforeAll
+    default void beforeAllTests() {
+        LOG.info("Before all tests");
+    }
+
+    @AfterAll
+    default void afterAllTests() {
+        LOG.info("After all tests");
+    }
