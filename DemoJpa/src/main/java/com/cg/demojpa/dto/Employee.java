@@ -24,7 +24,7 @@ public class Employee {
 	private Date dateOfJoining;
 	@Embedded
 	private Address address;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Project project;
 	
 	public Employee() {
