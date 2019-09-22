@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import com.cg.jpaassignment.dao.LibraryDao;
 import com.cg.jpaassignment.dao.LibraryDaoImpl;
 import com.cg.jpaassignment.dto.Author;
+import com.cg.jpaassignment.dto.Book;
 
 public class LibraryServiceImpl implements LibraryService {
 	
@@ -35,6 +36,11 @@ public class LibraryServiceImpl implements LibraryService {
 	public List<Author> viewAllAuthors() {
 		// TODO Auto-generated method stub
 		return libraryDao.findAllAuthors();
+	}
+
+	public Book addBook(Book book) {
+		// TODO Auto-generated method stub
+		return libraryDao.addBook(book);
 	}
 
 }

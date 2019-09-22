@@ -6,7 +6,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,8 +30,9 @@ public class Author {
 	private String middleName;
 	private String lastName;
 	private BigInteger phoneNo;
-	@ManyToMany
-	private List<Book> books;
+	@OneToMany(cascade = CascadeType.MERGE,mappedBy = "authorsList")
+	@JoinColumn(name="author_fk")
+	private Book book;
 	
 	public Author() {
 		
@@ -76,6 +80,15 @@ public class Author {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
 	}
 
 	@Override

@@ -2,9 +2,12 @@ package com.cg.jpaassignment.dto;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -14,7 +17,8 @@ public class Book {
 	private String bookTitle;
 	private Double bookCost;
 	private String bookIsbn;
-	@ManyToMany
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="book_fk")
 	private List<Author> authorsList;
 	
 	public Book() {

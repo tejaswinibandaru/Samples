@@ -29,6 +29,7 @@ public class LibraryDaoImpl implements LibraryDao{
 			transaction.begin();
 			Author authorToBeUpdated=em.merge(author);
 			authorToBeUpdated.setPhoneNo(authorToBeUpdated.getPhoneNo());
+			authorToBeUpdated.setBook(authorToBeUpdated.getBook());
 			transaction.commit();
 			return authorToBeUpdated;
 		}else {
@@ -72,7 +73,7 @@ public class LibraryDaoImpl implements LibraryDao{
 			em.persist(book);
 			transaction.commit();
 		}
-		else if(findAllAuthors().contains(book)) {
+		else if(findAllBooks().contains(book)) {
 			EntityTransaction transaction=em.getTransaction();
 			transaction.begin();
 			Book bookToBeUpdated=em.merge(book);

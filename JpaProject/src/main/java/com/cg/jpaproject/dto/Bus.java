@@ -3,41 +3,69 @@ package com.cg.jpaproject.dto;
 import java.math.BigInteger;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="bus")
 public class Bus {
 	@Id
-	private BigInteger busId;
+	private Integer busId;
+	
 	@Column(name="bus_name")
 	private String busName;
-	public enum busClassList{AC,NON_AC}
-	public enum busTypeList {SLEEPER,SEMI_SLEEPER}
+	
 	@Column(name="bus_type")
-	private busTypeList busType;
+	@Enumerated(EnumType.STRING)
+	private BusType busType;
+	
+	@Enumerated(EnumType.STRING)
 	@Column(name="bus_class")
-	private busClassList busClass;
-	@OneToMany(mappedBy="bus")
-	private List<DayOfWeek> days;
+	private BusClass busClass;
+	
+	@Column(name="days_of_journey")
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(
+	        name = "bus_days", 
+	        joinColumns = { @JoinColumn(name = "busId") }, 
+	        inverseJoinColumns = { @JoinColumn(name = "busDayId") }
+	    )
+	private List<BusDay> days;
+	
 	@Column(name="source")
 	private String source;
+	
 	@Column(name="destination")
 	private String destination;
+	
 	@Column(name="no_of_seats")
 	private Integer noOfSeats;
+	
 	@Column(name="delete_flag")
 	private Integer deleteFlag=0;
+	
 	@Column(name="start_time")
-	private LocalDateTime startTime;
+	private LocalTime startTime;
+	
 	@Column(name="end_time")
-	private LocalDateTime endTime;
+	private LocalTime endTime;
+	
 	@Column(name="cost_per_seat")
 	private Double costPerSeat;
 
@@ -45,14 +73,14 @@ public class Bus {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bus(BigInteger busId, String busName, String busType, String busClass, List<DayOfWeek> days, String source,
-			String destination, Integer noOfSeats, Integer delete_flag, LocalDateTime startTime, LocalDateTime endTime,
+	public Bus(Integer busId, String busName, String busType, String busClass, List<BusDay> days, String source,
+			String destination, Integer noOfSeats, Integer delete_flag, LocalTime startTime, LocalTime endTime,
 			Double costPerSeat) {
 		super();
 		this.busId = busId;
 		this.busName = busName;
-		this.busType = busTypeList.valueOf(busType);
-		this.busClass = busClassList.valueOf(busClass);
+		this.busType = BusType.valueOf(busType);
+		this.busClass = BusClass.valueOf(busClass);
 		this.days = days;
 		this.source = source;
 		this.destination = destination;
@@ -63,11 +91,11 @@ public class Bus {
 		this.costPerSeat = costPerSeat;
 	}
 
-	public BigInteger getBusId() {
+	public Integer getBusId() {
 		return busId;
 	}
 
-	public void setBusId(BigInteger busId) {
+	public void setBusId(Integer busId) {
 		this.busId = busId;
 	}
 
@@ -84,7 +112,7 @@ public class Bus {
 	}
 
 	public void setBusType(String busType) {
-		this.busType = busTypeList.valueOf(busType);
+		this.busType = BusType.valueOf(busType);
 	}
 
 	public String getBusClass() {
@@ -92,14 +120,14 @@ public class Bus {
 	}
 
 	public void setBusClass(String busClass) {
-		this.busClass = busClassList.valueOf(busClass);
+		this.busClass = BusClass.valueOf(busClass);
 	}
 
-	public List<DayOfWeek> getDays() {
+	public List<BusDay> getDays() {
 		return days;
 	}
 
-	public void setDays(List<DayOfWeek> days) {
+	public void setDays(List<BusDay> days) {
 		this.days = days;
 	}
 
@@ -135,19 +163,19 @@ public class Bus {
 		this.deleteFlag = delete_flag;
 	}
 
-	public LocalDateTime getStartTime() {
+	public LocalTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(LocalDateTime startTime) {
+	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public LocalDateTime getEndTime() {
+	public LocalTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(LocalDateTime endTime) {
+	public void setEndTime(LocalTime endTime) {
 		this.endTime = endTime;
 	}
 

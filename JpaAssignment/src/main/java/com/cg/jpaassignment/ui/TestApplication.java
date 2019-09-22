@@ -46,7 +46,11 @@ public class TestApplication {
 		book.setBookIsbn("123-456-7890");
 		book.setAuthorsList(service.viewAllAuthors());
 		
-		System.out.println(book);
+		
+		System.out.println(service.addBook(book));
+		
+		author.setBook(book);
+		System.out.println(service.addAuthor(author));
 		
 		
 	
