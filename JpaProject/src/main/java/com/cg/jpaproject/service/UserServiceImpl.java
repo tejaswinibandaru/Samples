@@ -10,6 +10,7 @@ import com.cg.jpaproject.dao.UserDao;
 import com.cg.jpaproject.dao.UserDaoImpl;
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusTransaction;
 
 public class UserServiceImpl implements UserService {
 	EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("jpaproject");
@@ -22,12 +23,24 @@ public class UserServiceImpl implements UserService {
 
 	public List<Bus> viewAllBuses() {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.findAllBuses();
 	}
 
 	public Booking createBooking(Booking booking) {
 		// TODO Auto-generated method stub
 		return userDao.saveBooking(booking);
 	}
+
+	public BusTransaction addTransaction(BusTransaction transaction) {
+		// TODO Auto-generated method stub
+		return userDao.saveTransaction(transaction);
+	}
+
+	public List<Booking> viewAllBookings() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }

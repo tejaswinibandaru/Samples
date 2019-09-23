@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
@@ -40,7 +41,8 @@ public class UserDaoImpl implements UserDao {
 
 	public List<Bus> findAllBuses() {
 		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Bus> query=entityManager.createQuery("SELECT bus FROM Bus bus", Bus.class);
+		return query.getResultList();
 	}
 
 	public List<Bus> findBusByDay(LocalDate date) {
@@ -85,7 +87,8 @@ public class UserDaoImpl implements UserDao {
 
 	public List<Booking> findAllBookings() {
 		// TODO Auto-generated method stub
-		return null;
+		TypedQuery<Booking> query=entityManager.createQuery("SELECT booking FROM Booking booking", Booking.class);
+		return query.getResultList();
 	}
 
 	public List<Passenger> findAllPassengers(Integer bookingId) {
@@ -95,7 +98,15 @@ public class UserDaoImpl implements UserDao {
 
 	public BusTransaction saveTransaction(BusTransaction busTransaction) {
 		// TODO Auto-generated method stub
-		return null;
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
+		BusTransaction transactionObj=entityManager.merge(busTransaction);
+		transactionObj.setBookings(transactionObj.getBookings());
+		transactionObj.setBus(transactionObj.getBus());
+		entityManager.persist(transactionObj);
+		entityManager.flush();
+		transaction.commit();
+		return transactionObj;
 	}
 
 }

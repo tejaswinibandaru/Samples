@@ -13,7 +13,7 @@ public class TestApplication {
 	
 	public static void main(String[] args) {
 		Author author=new Author();
-		author.setAuthorId(123);
+		author.setAuthorId(121);
 		author.setFirstName("jane");
 		author.setMiddleName("marie");
 		author.setLastName("austin");
@@ -50,9 +50,6 @@ public class TestApplication {
 		
 		
 		System.out.println(service.addBook(book));
-		
-		author.setBooks(books);
-		System.out.println(service.addAuthor(author));
 		
 		
 	

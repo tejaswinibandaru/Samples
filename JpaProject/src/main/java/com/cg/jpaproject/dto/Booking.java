@@ -23,8 +23,8 @@ public class Booking {
 	private List<Passenger> passengers;
 	private String modeOfPayment;
 	private Double totalCost;
-	@ManyToOne
-	@JoinColumn
+	@ManyToOne(cascade =CascadeType.MERGE)
+	@JoinColumn(name="transaction_fk")
 	private BusTransaction transaction;
 	
 
