@@ -30,9 +30,8 @@ public class Author {
 	private String middleName;
 	private String lastName;
 	private BigInteger phoneNo;
-	@OneToMany(cascade = CascadeType.MERGE,mappedBy = "authorsList")
-	@JoinColumn(name="author_fk")
-	private Book book;
+	@ManyToMany(cascade = CascadeType.MERGE,mappedBy = "authorsList")
+	private List<Book> books;
 	
 	public Author() {
 		
@@ -40,14 +39,14 @@ public class Author {
 
 
 	public Author(Integer authorId, String firstName, String middleName, String lastName, BigInteger phoneNo,
-			Book book) {
+			List<Book> books) {
 		super();
 		this.authorId = authorId;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.phoneNo = phoneNo;
-		this.book = book;
+		this.books = books;
 	}
 
 	public Integer getAuthorId() {
@@ -83,18 +82,18 @@ public class Author {
 	}
 	
 
-	public Book getBook() {
-		return book;
+	public List<Book> getBooks() {
+		return books;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 
 	@Override
 	public String toString() {
 		return "Author [authorId=" + authorId + ", firstName=" + firstName + ", middleName=" + middleName
-				+ ", lastName=" + lastName + ", phoneNo=" + phoneNo + ", book=" + book + "]";
+				+ ", lastName=" + lastName + ", phoneNo=" + phoneNo + ", books=" + books + "]";
 	}
 
 	

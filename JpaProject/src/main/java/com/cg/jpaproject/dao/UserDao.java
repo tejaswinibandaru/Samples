@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusTransaction;
 import com.cg.jpaproject.dto.Passenger;
 
 public interface UserDao {
@@ -23,5 +24,7 @@ public interface UserDao {
 	public List<Booking> findAllBookings();
 	
 	public List<Passenger> findAllPassengers(Integer bookingId);
+	
+	public BusTransaction saveTransaction(BusTransaction busTransaction);
 	
 }

@@ -17,7 +17,7 @@ public class BusTransaction {
 	private Integer availableSeats;
 	@OneToMany(cascade = CascadeType.MERGE,mappedBy="transaction")
 	private ArrayList<Booking> bookings;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Bus bus;
 	
 	public BusTransaction() {

@@ -1,6 +1,7 @@
 package com.cg.jpaassignment.ui;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cg.jpaassignment.dto.Author;
@@ -39,17 +40,18 @@ public class TestApplication {
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		
 		Book book=new Book();
-		
+		List<Book>books=new ArrayList<Book>();
 		book.setBookId(1001);
 		book.setBookTitle("Java Fundamentals");
 		book.setBookCost(500.0);
 		book.setBookIsbn("123-456-7890");
-		book.setAuthorsList(service.viewAllAuthors());
+		book.setAuthorsList(authorsList);
+		books.add(book);
 		
 		
 		System.out.println(service.addBook(book));
 		
-		author.setBook(book);
+		author.setBooks(books);
 		System.out.println(service.addAuthor(author));
 		
 		

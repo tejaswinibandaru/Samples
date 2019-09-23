@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusTransaction;
 import com.cg.jpaproject.dto.Passenger;
 
 public class UserDaoImpl implements UserDao {
@@ -88,6 +89,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public List<Passenger> findAllPassengers(Integer bookingId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public BusTransaction saveTransaction(BusTransaction busTransaction) {
 		// TODO Auto-generated method stub
 		return null;
 	}

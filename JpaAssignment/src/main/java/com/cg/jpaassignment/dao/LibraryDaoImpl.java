@@ -29,7 +29,7 @@ public class LibraryDaoImpl implements LibraryDao{
 			transaction.begin();
 			Author authorToBeUpdated=em.merge(author);
 			authorToBeUpdated.setPhoneNo(authorToBeUpdated.getPhoneNo());
-			authorToBeUpdated.setBook(authorToBeUpdated.getBook());
+			authorToBeUpdated.setBooks(authorToBeUpdated.getBooks());
 			transaction.commit();
 			return authorToBeUpdated;
 		}else {
@@ -70,7 +70,10 @@ public class LibraryDaoImpl implements LibraryDao{
 		if(findAllBooks()==null) {
 			EntityTransaction transaction=em.getTransaction();
 			transaction.begin();
-			em.persist(book);
+			Book bookObj=em.merge(book);
+			bookObj.setAuthorsList(bookObj.getAuthorsList());
+			em.persist(bookObj);
+			em.flush();
 			transaction.commit();
 		}
 		else if(findAllBooks().contains(book)) {
@@ -83,7 +86,10 @@ public class LibraryDaoImpl implements LibraryDao{
 		}else {
 			EntityTransaction transaction=em.getTransaction();
 			transaction.begin();
-			em.persist(book);
+			Book bookObj=em.merge(book);
+			bookObj.setAuthorsList(bookObj.getAuthorsList());
+			em.persist(bookObj);
+			em.flush();
 			transaction.commit();
 		}
 		return book;
