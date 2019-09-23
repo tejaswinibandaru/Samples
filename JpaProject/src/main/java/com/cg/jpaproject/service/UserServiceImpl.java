@@ -32,6 +32,11 @@ public class UserServiceImpl implements UserService {
 		return userDao.saveBooking(booking);
 	}
 
+	public Integer removeBooking(Integer bookingId) {
+		// TODO Auto-generated method stub
+		return userDao.removeBooking(bookingId);
+	}
+
 	public BusTransaction addTransaction(BusTransaction transaction) {
 		// TODO Auto-generated method stub
 		return userDao.saveTransaction(transaction);

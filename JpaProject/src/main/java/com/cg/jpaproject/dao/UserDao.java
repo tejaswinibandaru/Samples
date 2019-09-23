@@ -20,7 +20,7 @@ public interface UserDao {
 	
 	
 	public Booking saveBooking(Booking booking);
-	public Integer removeBooking (Booking booking);
+	public Integer removeBooking (Integer booking);
 	public Booking findBookingById(Integer booking);
 	public List<Booking> findAllBookings();
 	

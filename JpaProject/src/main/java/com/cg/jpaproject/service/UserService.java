@@ -13,6 +13,7 @@ public interface UserService {
 	public List<Bus> viewAllBuses();
 	
 	public Booking createBooking(Booking booking);
+	public Integer removeBooking(Integer bookingId);
 	public List<Booking> viewAllBookings();
 	public BusTransaction addTransaction(BusTransaction transaction);
 	
@@ -20,5 +21,7 @@ public interface UserService {
 	public User addUser(User user);
 	public Integer removeUser(Integer userId);
 	public List<User> viewAllUsers();
+	
+	
 	
 }
