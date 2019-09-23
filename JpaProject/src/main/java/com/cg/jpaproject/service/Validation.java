@@ -195,10 +195,10 @@ public class Validation {
 		return choice;
 	}
 	
-	public BigInteger validateBigIntegerChoice(String input) throws BusException {
+	public Integer validateBigIntegerChoice(String input) throws BusException {
 		  if(!isValidNumeric(input)) 
 			throw new BusException("Integer choice to be entered");
-		  return BigInteger.valueOf(Integer.parseInt(input));
+		  return Integer.parseInt(input);
 		}
 
 }

@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusDay;
+import com.cg.jpaproject.dto.BusTransaction;
+import com.cg.jpaproject.dto.Passenger;
+import com.cg.jpaproject.exception.BusException;
 import com.cg.jpaproject.service.UserService;
 import com.cg.jpaproject.service.UserServiceImpl;
 import com.cg.jpaproject.service.Validation;
@@ -17,12 +22,12 @@ public class BusReservationSystem {
 	static int counter = 0;
 	static Validation validation;
     static final String EXCEPTIONMSG="Exception occured: ";
-	public static void main(String[] args) {
+	public static void main(String[] args) throws BusException {
 		userService = new UserServiceImpl();
 		showUserMenu();
 	}
 	
-	static void showUserMenu() {
+	static void showUserMenu() throws BusException {
 		System.out.println("\n\n\t\t****** Welcome to Bus Reservation System ******");
 		validation = new Validation();
 		Scanner scanner = new Scanner(System.in);
@@ -155,23 +160,22 @@ public class BusReservationSystem {
 						continue;
 					}
 				}
-				List<DayOfWeek> days = new ArrayList<DayOfWeek>();
+				List<BusDay> days = new ArrayList<BusDay>();
 				for (int i = 0; i < noOfDays; i++) {
-					int day = 0;
-					while (true) {
-						System.out.println("Enter the day number starting from 1(Monday) to 7(Sunday): ");
-						input = scanner.next();
-
-						try {
-							day = validation.validateDayChoice(input);
-							break;
-						} catch (RuntimeException e) {
-							
-							System.out.println(EXCEPTIONMSG + e.getMessage());
-							continue;
-						}
-					}
-					days.add(DayOfWeek.of(day));
+					System.out.println("Enter the days starting from Monday to Sunday: ");
+					input = scanner.next();
+					/*
+					 * while (true) {
+					 * 
+					 * 
+					 * try { day = validation.validateDayChoice(input); break; } catch
+					 * (RuntimeException e) {
+					 * 
+					 * System.out.println(EXCEPTIONMSG + e.getMessage()); continue; } }
+					 */
+					BusDay day=new BusDay();
+					day.setDay(input.toUpperCase());
+					days.add(day);
 				}
 
 				String source;
@@ -213,10 +217,10 @@ public class BusReservationSystem {
 				bus.setBusType(busType);
 				bus.setBusClass(busClass);
 				bus.setNoOfSeats(busSeats);
-				bus.setDayOfJourney(days);
+				bus.setDays(days);
 				bus.setSource(source);
 				bus.setDestination(destination);
-				bus.setCost(costPerSeat);
+				bus.setCostPerSeat(costPerSeat);
 
 				bus = userService.addBusDetails(bus);
 				System.out.println("Bus added: ");
@@ -225,24 +229,21 @@ public class BusReservationSystem {
 				System.out.println("Bus Type: " + bus.getBusType());
 				System.out.println("Bus Class: " + bus.getBusClass());
 				System.out.println("Number of Seats: " + bus.getNoOfSeats());
-				System.out.println("Days Of Journey: " + bus.getDayOfJourney());
+				System.out.println("Days Of Journey: " + bus.getDays());
 				System.out.println("Source: " + bus.getSource());
 				System.out.println("Destination: " + bus.getDestination());
-				System.out.println("Cost per seat: " + bus.getCost());
-				// System.out.println(userService.addBusDetails(bus));
-
-				// System.out.println(userServ.viewBuses());
+				System.out.println("Cost per seat: " + bus.getCostPerSeat());
 
 				break;
 
 			case 2:
-				BigInteger busId;
+				Integer busId;
 				while (true) {
 					System.out.println("Enter the bus id to remove");
 					input = scanner.next(); // INputMismatchExcp
 					try {
 						busId = validation.validateBigIntegerChoice(input);
-						int removeStatus = userService.removeBusDetails(busId);
+						int removeStatus = userService.removeBus(busId);
 						if (removeStatus == 1) {
 							System.out.println("Bus removed");
 						} else {
@@ -265,7 +266,7 @@ public class BusReservationSystem {
 					try {
 						busId = validation.validateBigIntegerChoice(input);
 
-						for (Bus busObj : userService.viewBuses()) {
+						for (Bus busObj : userService.viewAllBuses()) {
 							if (busId.equals(busObj.getBusId())) {
 								double cost;
 								while (true) {
@@ -273,7 +274,7 @@ public class BusReservationSystem {
 									try {
 										cost = Validation.validateCost();
 
-										busObj.setCost(cost);
+										busObj.setCostPerSeat(cost);
 										System.out.println("cost per seat of the bus updated");
 										break;
 									} catch (Exception e) {
@@ -296,8 +297,8 @@ public class BusReservationSystem {
 				}
 				break;
 			case 4:
-				for(Bus busOb:userService.viewBuses()) {
-					System.out.println(busOb.getBusId()+" "+busOb.getBusName()+" "+busOb.getNoOfSeats()+" "+busOb.getBusType()+" "+busOb.getBusClass()+" "+busOb.getSource()+" "+busOb.getDestination()+" "+busOb.getCost());
+				for(Bus busOb:userService.viewAllBuses()) {
+					System.out.println(busOb.getBusId()+" "+busOb.getBusName()+" "+busOb.getNoOfSeats()+" "+busOb.getBusType()+" "+busOb.getBusClass()+" "+busOb.getSource()+" "+busOb.getDestination()+" "+busOb.getCostPerSeat());
 				}
 				break;
 			case 5:
@@ -405,14 +406,20 @@ public class BusReservationSystem {
 					}
 				}
 
-				List<Bus> busList = userService.getRunningBuses(date, source, destination);
+				List<Bus> busList = userService.viewBusByDay(date);
+				List<Bus> runningBuses=new ArrayList<Bus>();
+				for(Bus busObj: busList) {
+					if(busObj.getSource().equalsIgnoreCase(source) && busObj.getDestination().equals(destination)) {
+						runningBuses.add(busObj);
+					}
+				}
 				System.out.println("Running buses on your day of journey: ");
 				int i = 0;
-				for (Bus b : busList) {
+				for (Bus b : runningBuses) {
 					System.out.println((i + 1) + " " + b.getBusId() + " " + b.getBusName() + " " + b.getBusType() + " "
-							+ b.getBusClass() + " " + b.getCost());
+							+ b.getBusClass() + " " + b.getCostPerSeat());
 				}
-				BigInteger busId;
+				Integer busId;
 				while (true) {
 					System.out.println("Enter the bus Id of the bus you will be travelling: ");
 					input = scanner.next();
@@ -427,7 +434,7 @@ public class BusReservationSystem {
 					}
 				}
 
-				for (Bus busObj : busList) {
+				for (Bus busObj : runningBuses) {
 					if (busId.equals(busObj.getBusId())) {
 						int passengersCount;
 						while (true) {
@@ -442,8 +449,7 @@ public class BusReservationSystem {
 								continue;
 							}
 						}
-						// System.out.println("Enter the number of passengers: ");
-						// passengersCount=scanner.nextInt();
+						
 						boolean bookingStatus = userService.checkBusTransaction(date, busObj, passengersCount);
 						if (bookingStatus) {
 							List<Passenger> passengersList = new ArrayList<Passenger>();

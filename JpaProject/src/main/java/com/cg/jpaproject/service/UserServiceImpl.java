@@ -14,7 +14,11 @@ import com.cg.jpaproject.dao.UserDaoImpl;
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
 import com.cg.jpaproject.dto.BusTransaction;
+
 import com.cg.jpaproject.exception.BusException;
+
+import com.cg.jpaproject.dto.User;
+
 
 public class UserServiceImpl implements UserService {
 	EntityManagerFactory entityManagerFactory=Persistence.createEntityManagerFactory("jpaproject");
@@ -50,10 +54,27 @@ public class UserServiceImpl implements UserService {
 		return userDao.findBusByDay(date);
 	}
 
-	@Override
 	public List<Object[]> viewBusByRoutes(String source, String destination) {
 		// TODO Auto-generated method stub
-		return userDao.findBusByRoutes(source, destination);
+		return userDao.findBusByRoutes(source, destination);}
+	public Integer removeBus(Integer busId) {
+		// TODO Auto-generated method stub
+		return userDao.removeBus(busId);
+	}
+
+	public User addUser(User user) {
+		// TODO Auto-generated method stub
+		return userDao.saveUser(user);
+	}
+
+	public Integer removeUser(Integer userId) {
+		// TODO Auto-generated method stub
+		return userDao.removeUser(userId);
+	}
+
+	public List<User> viewAllUsers() {
+		// TODO Auto-generated method stub
+		return userDao.viewAllUsers();
 	}
 	
 	public static void validateTravel(String source, String destination) throws BusException{
@@ -69,6 +90,12 @@ public class UserServiceImpl implements UserService {
 			throw new InputMismatchException("Wrong input type");
 		}
 
+	}
+
+	@Override
+	public List<BusTransaction> viewAllTransactions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
