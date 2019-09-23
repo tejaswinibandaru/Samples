@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
 import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
@@ -506,7 +507,7 @@ public class BusReservationSystem {
 				}
 				break;
 			case 4:
-				BigInteger bookingId;
+				Integer bookingId;
 				while (true) {
 					System.out.println("Enter the booking id you want to cancel the booking for: ");
 					input = scanner.next(); // INputMismatchExcp

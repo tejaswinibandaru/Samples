@@ -16,6 +16,7 @@ public interface UserService {
 	public List<Object[]> viewBusByRoutes(String source,String destination);
 	
 	public Booking createBooking(Booking booking);
+	public Integer removeBooking(Integer bookingId);
 	public List<Booking> viewAllBookings();
 	public BusTransaction addTransaction(BusTransaction transaction);
 	public List<BusTransaction> viewAllTransactions();
@@ -24,5 +25,7 @@ public interface UserService {
 	public User addUser(User user);
 	public Integer removeUser(Integer userId);
 	public List<User> viewAllUsers();
+	
+	
 	
 }
