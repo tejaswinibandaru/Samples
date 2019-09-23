@@ -70,11 +70,31 @@ public class TestApplication {
 		 * System.out.println(service.addTransaction(busTransaction));
 		 */
 		
-		List<Bus> buses=service.viewAllBuses();
-		for(Bus bus:buses) {
-			System.out.println(bus);
+		/*
+		 * List<Bus> buses=service.viewAllBuses(); for(Bus bus:buses) {
+		 * System.out.println(bus); }
+		 */
+		
+		/*
+		 * List<Bus> buses=service.viewBusByDay(LocalDate.now()); for (Bus bus : buses)
+		 * { System.out.println(bus); }
+		 */
+		
+		
+		
+		List<Object[]> results=service.viewBusByRoutes("mumbai", "pune");
+		for(Object[] result:results) {
+			System.out.println(result[0]+" "+result[1]+" "+result[2]+" "+result[3]);
+			
 		}
 		
-
+		LocalDate date=LocalDate.now();
+		List<Bus> buses=service.viewBusByDay(LocalDate.now());
+		
+		System.out.println(buses);
+		
+		
+		
+		
 	}
 }

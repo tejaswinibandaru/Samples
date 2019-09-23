@@ -1,15 +1,19 @@
 package com.cg.jpaproject.dao;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
+import com.cg.jpaproject.dto.Days;
 import com.cg.jpaproject.dto.Passenger;
 
 public class UserDaoImpl implements UserDao {
@@ -47,12 +51,28 @@ public class UserDaoImpl implements UserDao {
 
 	public List<Bus> findBusByDay(LocalDate date) {
 		// TODO Auto-generated method stub
-		return null;
+		String dayString=date.getDayOfWeek().toString();
+		Days day=Days.valueOf(dayString);
+//		Query query=entityManager.createQuery("SELECT bus.busName,bus.busType,bus.busClass,bus.costPerSeat,bus.source,bus.destination FROM Bus bus INNER JOIN BusDay busDay ON bus.busId=busDay.busId WHERE busDay.day=:dayValue");
+		Query query=entityManager.createQuery("SELECT busday.day FROM BusDay busday WHERE busday.day=:dayValue");
+		query.setParameter("dayValue", day);
+		BusDay busDay= (BusDay) query.getSingleResult();
+		
+		/*
+		 * query.setParameter("source", source); query.setParameter("destination",
+		 * destination);
+		 */
+		
+		return busDay.getBuses();
 	}
 
-	public List<Bus> findBusByRoutes(String source, String destination) {
+	public List<Object[]> findBusByRoutes(String source, String destination) {
 		// TODO Auto-generated method stub
-		return null;
+		Query query=entityManager.createQuery("SELECT bus.busName,bus.busType,bus.busClass,bus.costPerSeat FROM Bus bus WHERE bus.source=:source AND bus.destination=:destination");
+		query.setParameter("source", source);
+		query.setParameter("destination", destination);
+		List<Object[]> results=query.getResultList();
+		return results;
 	}
 
 	public Bus findBusById(Integer busId) {
