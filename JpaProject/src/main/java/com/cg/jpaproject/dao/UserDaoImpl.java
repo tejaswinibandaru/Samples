@@ -11,6 +11,7 @@ import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
 import com.cg.jpaproject.dto.BusTransaction;
 import com.cg.jpaproject.dto.Passenger;
+import com.cg.jpaproject.dto.User;
 
 public class UserDaoImpl implements UserDao {
 	
@@ -26,6 +27,7 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		EntityTransaction transaction=entityManager.getTransaction();
 		transaction.begin();
+		bus.setDelete_flag(0);
 		Bus busDays=entityManager.merge(bus);
 		busDays.setDays(busDays.getDays());
 		entityManager.persist(busDays);
@@ -34,19 +36,27 @@ public class UserDaoImpl implements UserDao {
 		return busDays;
 	}
 
-	public Integer removebus(Bus bus) {
+	public Integer removeBus(Integer busId) {
 		// TODO Auto-generated method stub
-		return null;
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		Bus busUpdate = entityManager.find(Bus.class, busId);
+		busUpdate.setDelete_flag(1);
+		entityManager.merge(busUpdate);
+		
+		transaction.commit();
+		return 1;
 	}
 
 	public List<Bus> findAllBuses() {
 		// TODO Auto-generated method stub
-		TypedQuery<Bus> query=entityManager.createQuery("SELECT bus FROM Bus bus", Bus.class);
+		TypedQuery<Bus> query=entityManager.createQuery("SELECT bus FROM Bus bus where bus.deleteFlag = 0", Bus.class);
 		return query.getResultList();
 	}
 
 	public List<Bus> findBusByDay(LocalDate date) {
 		// TODO Auto-generated method stub
+		//TypedQuery<Bus> query=entityManager.createQuery("SELECT bus FROM Bus bus where bus.deleteFlag = 0", Bus.class);
 		return null;
 	}
 
@@ -64,10 +74,14 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		EntityTransaction transaction=entityManager.getTransaction();
 		transaction.begin();
+		BusTransaction busTransaction =booking.getBusTransaction();
 		Booking bookingObj=entityManager.merge(booking);
-		bookingObj.setBus(bookingObj.getBus());
+																					//deleteFlag & bookingStatus
+		//
+		busTransaction =insertBookingIntoTransaction(bookingObj, busTransaction);
+		bookingObj.setBus(bookingObj.getBus());										
 		bookingObj.setPassengers(bookingObj.getPassengers());
-		bookingObj.setTransaction(bookingObj.getTransaction());
+		bookingObj.setBusTransaction(busTransaction);
 		entityManager.persist(bookingObj);
 		entityManager.flush();
 		transaction.commit();
@@ -103,10 +117,54 @@ public class UserDaoImpl implements UserDao {
 		BusTransaction transactionObj=entityManager.merge(busTransaction);
 		transactionObj.setBookings(transactionObj.getBookings());
 		transactionObj.setBus(transactionObj.getBus());
+		transactionObj.setDeleteFlag(0);																//deleteFlag and transactionStatus
+		transactionObj.setTransactionStatus("ACTIVE");
 		entityManager.persist(transactionObj);
 		entityManager.flush();
 		transaction.commit();
 		return transactionObj;
 	}
+
+	public BusTransaction insertBookingIntoTransaction(Booking booking, BusTransaction busTransaction) {
+		// TODO Auto-generated method stub
+		BusTransaction transactionUpdate = entityManager.merge(busTransaction);
+		List<Booking> bookingList= transactionUpdate.getBookings();
+		bookingList.add(booking);
+		transactionUpdate.setBookings(bookingList);
+		entityManager.persist(transactionUpdate);
+		return busTransaction;
+	}
+
+	public User saveUser(User user) {
+		// TODO Auto-generated method stub
+		EntityTransaction transaction=entityManager.getTransaction();
+		transaction.begin();
+		user.setDeleteFlag(0);
+		User userSave=entityManager.merge(user);
+		entityManager.persist(userSave);
+		entityManager.flush();
+		transaction.commit();
+		return user;
+	}
+
+	public Integer removeUser(Integer userId) {
+		// TODO Auto-generated method stub
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		User userUpdate = entityManager.find(User.class, userId);
+		userUpdate.setDeleteFlag(1);
+		entityManager.merge(userUpdate);
+		
+		transaction.commit();
+		return 1;
+	}
+
+	public List<User> viewAllUsers() {
+		// TODO Auto-generated method stub
+		TypedQuery<User> query=entityManager.createQuery("SELECT user FROM User user where user.deleteFlag = 0", User.class);
+		return query.getResultList();
+	}
+	
+	
 
 }

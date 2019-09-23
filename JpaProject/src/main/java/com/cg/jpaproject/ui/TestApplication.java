@@ -1,27 +1,33 @@
 package com.cg.jpaproject.ui;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
 import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
 import com.cg.jpaproject.dto.Passenger;
+import com.cg.jpaproject.dto.User;
 import com.cg.jpaproject.service.UserService;
 import com.cg.jpaproject.service.UserServiceImpl;
 
 public class TestApplication {
 	public static void main(String[] args) {
 		UserService service = new UserServiceImpl();
+		
+		User user = new User();
+		user.setUserId(1);
+		user.setUsername("Ramu");
+		user.setPass("1234");
+		user.setEmail("ramukaka@sholay.com");
+		user.setUserType('C');
+		user.setPhoneNumber(745496258);
+		service.addUser(user);
+		System.out.println(service.viewAllUsers());
 
 		Bus bus = new Bus();
 		bus.setBusId(101);
@@ -49,9 +55,7 @@ public class TestApplication {
 		String startTimeString = "06:30 AM";
 		String endTimeString = "10:00 AM";
 		LocalTime startTime = LocalTime.parse(startTimeString, formatter);
-		LocalTime endTime = LocalTime.parse(endTimeString, formatter);
-		//LocalDateTimeAttributeConverter loc = new LocalDateTimeAttributeConverter();
-		//Timestamp startTimeSql =loc.convertToDatabaseColumn(startTime);
+		LocalTime endTime = LocalTime.parse(endTimeString, formatter); // LocalDateTimeAttributeConverter
 
 		bus.setStartTime(startTime);
 		bus.setEndTime(endTime);
@@ -83,6 +87,7 @@ public class TestApplication {
 		booking.setPassengers(passengers);
 		booking.setModeOfPayment("DC");
 		booking.setTotalCost(passengers.size() * bus.getCostPerSeat());
+		booking.setUser(user);
 
 		bookings.add(booking);
 
@@ -97,10 +102,15 @@ public class TestApplication {
 
 		System.out.println(service.addTransaction(busTransaction));
 
-		/*
-		 * List<Bus> buses=service.viewAllBuses(); for(Bus bus:buses) {
-		 * System.out.println(bus); }
-		 */
+		List<Bus> buses = service.viewAllBuses();
+		for (Bus bus2 : buses) {
+			System.out.println(bus2);
+			service.removeBus(bus2.getBusId());
+		}
+
+		
+		//service.removeUser(1);
+		System.out.println(service.viewAllUsers());
 
 	}
 }
