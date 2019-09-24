@@ -226,4 +226,19 @@ public class UserDaoImpl implements UserDao {
 		return dayToBeUpdated;
 	}
 
+	@Override
+	public BusTransaction findTransactionById(Integer transactionId) {
+		// TODO Auto-generated method stub
+		return entityManager.find(BusTransaction.class, transactionId);
+	}
+
+	@Override
+	public BusTransaction updateTransaction(Integer transactionId) {
+		// TODO Auto-generated method stub
+		BusTransaction busTransaction=findTransactionById(transactionId);
+		busTransaction.setBooking(busTransaction.getBooking());
+		entityManager.merge(busTransaction)
+		return null;
+	}
+
 }

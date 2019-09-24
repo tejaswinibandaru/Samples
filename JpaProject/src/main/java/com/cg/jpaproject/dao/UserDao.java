@@ -30,6 +30,8 @@ public interface UserDao {
 	
 	public BusTransaction saveTransaction(BusTransaction busTransaction);
 	public List<BusTransaction> findAllTransactions();
+	public BusTransaction findTransactionById(Integer transactionId);
+	public BusTransaction updateTransaction(Integer transactionId);
 	public List<BusTransaction> findTransactionsByDate(LocalDate date);
 	
 //	public BusTransaction insertBookingIntoTransaction(Booking booking, BusTransaction busTransaction);
