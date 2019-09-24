@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
 import com.cg.jpaproject.dto.User;
 
@@ -15,11 +16,15 @@ public interface UserService {
 	public List<Bus> viewBusByDay(LocalDate date);
 	public List<Object[]> viewBusByRoutes(String source,String destination);
 	
+	public BusDay addBusDay(BusDay day);
+	
 	public Booking createBooking(Booking booking);
 	public Integer removeBooking(Integer bookingId);
 	public List<Booking> viewAllBookings();
+	
 	public BusTransaction addTransaction(BusTransaction transaction);
 	public List<BusTransaction> viewAllTransactions();
+	public List<BusTransaction> viewTransactionsByDate(LocalDate date);
 	
 	
 	public User addUser(User user);

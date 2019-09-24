@@ -20,7 +20,7 @@ public class BusDay {
 	private Integer busDayId;
 	@Enumerated(EnumType.STRING)
 	private Days day;
-	@ManyToMany(cascade = CascadeType.MERGE,mappedBy = "days")
+	@ManyToMany(cascade = CascadeType.PERSIST,mappedBy = "days")
 	private List<Bus> buses;
 
 	public BusDay() {

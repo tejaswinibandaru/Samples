@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
 import com.cg.jpaproject.dto.Passenger;
 import com.cg.jpaproject.dto.User;
@@ -12,6 +13,7 @@ import com.cg.jpaproject.dto.User;
 public interface UserDao {
 	
 	public Bus saveBus(Bus bus);
+	public BusDay saveBusDay(BusDay day);
 	public Integer removeBus(Integer busId);
 	public List<Bus> findAllBuses();
 	public List<Bus> findBusByDay(LocalDate date);
@@ -27,7 +29,10 @@ public interface UserDao {
 	public List<Passenger> findAllPassengers(Integer bookingId);
 	
 	public BusTransaction saveTransaction(BusTransaction busTransaction);
-	public BusTransaction insertBookingIntoTransaction(Booking booking, BusTransaction busTransaction);
+	public List<BusTransaction> findAllTransactions();
+	public List<BusTransaction> findTransactionsByDate(LocalDate date);
+	
+//	public BusTransaction insertBookingIntoTransaction(Booking booking, BusTransaction busTransaction);
 	
 	public User saveUser(User user);
 	public Integer removeUser(Integer userId);

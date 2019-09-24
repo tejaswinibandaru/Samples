@@ -40,9 +40,8 @@ public class Bus {
 	private BusClass busClass;
 	
 	@Column(name="days_of_journey")
-	@ManyToMany(cascade = CascadeType.MERGE)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(
-	        name = "bus_days", 
 	        joinColumns = { @JoinColumn(name = "busId") }, 
 	        inverseJoinColumns = { @JoinColumn(name = "busDayId") }
 	    )
@@ -112,7 +111,7 @@ public class Bus {
 	}
 
 	public void setBusType(String busType) {
-		this.busType = BusType.valueOf(busType);
+		this.busType = BusType.valueOf(busType.toUpperCase());
 	}
 
 	public String getBusClass() {
@@ -120,7 +119,7 @@ public class Bus {
 	}
 
 	public void setBusClass(String busClass) {
-		this.busClass = BusClass.valueOf(busClass);
+		this.busClass = BusClass.valueOf(busClass.toUpperCase());
 	}
 
 	public List<BusDay> getDays() {

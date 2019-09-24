@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao {
 		String dayString=date.getDayOfWeek().toString();
 		Days day=Days.valueOf(dayString);
 //		Query query=entityManager.createQuery("SELECT bus.busName,bus.busType,bus.busClass,bus.costPerSeat,bus.source,bus.destination FROM Bus bus INNER JOIN BusDay busDay ON bus.busId=busDay.busId WHERE busDay.day=:dayValue");
-		Query query=entityManager.createQuery("SELECT busday.day FROM BusDay busday WHERE busday.day=:dayValue");
+		Query query=entityManager.createQuery("SELECT busday FROM BusDay busday WHERE busday.day=:dayValue");
 		query.setParameter("dayValue", day);
 		BusDay busDay= (BusDay) query.getSingleResult();
 		
@@ -104,7 +104,6 @@ public class UserDaoImpl implements UserDao {
 		Booking bookingObj = entityManager.merge(booking);
 		// deleteFlag & bookingStatus
 		//
-		busTransaction = insertBookingIntoTransaction(bookingObj, busTransaction);
 		bookingObj.setBus(bookingObj.getBus());
 		bookingObj.setPassengers(bookingObj.getPassengers());
 		bookingObj.setBusTransaction(busTransaction);
@@ -149,7 +148,7 @@ public class UserDaoImpl implements UserDao {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		BusTransaction transactionObj = entityManager.merge(busTransaction);
-		transactionObj.setBookings(transactionObj.getBookings());
+		transactionObj.setBooking(transactionObj.getBooking());
 		transactionObj.setBus(transactionObj.getBus());
 		transactionObj.setDeleteFlag(0); // deleteFlag and transactionStatus
 		transactionObj.setTransactionStatus("ACTIVE");
@@ -159,15 +158,14 @@ public class UserDaoImpl implements UserDao {
 		return transactionObj;
 	}
 
-	public BusTransaction insertBookingIntoTransaction(Booking booking, BusTransaction busTransaction) {
-		// TODO Auto-generated method stub
-		BusTransaction transactionUpdate = entityManager.merge(busTransaction);
-		List<Booking> bookingList = transactionUpdate.getBookings();
-		bookingList.add(booking);
-		transactionUpdate.setBookings(bookingList);
-		entityManager.persist(transactionUpdate);
-		return busTransaction;
-	}
+	/*
+	 * public BusTransaction insertBookingIntoTransaction(Booking booking,
+	 * BusTransaction busTransaction) { // TODO Auto-generated method stub
+	 * BusTransaction transactionUpdate = entityManager.merge(busTransaction);
+	 * Booking bookingList = transactionUpdate.getBooking();
+	 * bookingList.add(booking); transactionUpdate.setBookings(bookingList);
+	 * entityManager.persist(transactionUpdate); return busTransaction; }
+	 */
 
 	public User saveUser(User user) {
 		// TODO Auto-generated method stub
@@ -198,6 +196,34 @@ public class UserDaoImpl implements UserDao {
 		TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user where user.deleteFlag = 0",
 				User.class);
 		return query.getResultList();
+	}
+
+	@Override
+	public List<BusTransaction> findAllTransactions() {
+		// TODO Auto-generated method stub
+		TypedQuery<BusTransaction> query=entityManager.createQuery("SELECT busTransaction FROM BusTransaction busTransaction", BusTransaction.class);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<BusTransaction> findTransactionsByDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		TypedQuery<BusTransaction> query=entityManager.createQuery("SELECT busTransaction FROM BusTransaction busTransaction WHERE busTransaction.date=:date", BusTransaction.class);
+		query.setParameter("date", date);
+		return query.getResultList();
+	}
+
+	@Override
+	public BusDay saveBusDay(BusDay day) {
+		// TODO Auto-generated method stub
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		BusDay dayToBeUpdated = entityManager.merge(day);
+		dayToBeUpdated.setBuses(dayToBeUpdated.getBuses());
+		entityManager.persist(dayToBeUpdated);
+		entityManager.flush();
+		transaction.commit();
+		return dayToBeUpdated;
 	}
 
 }

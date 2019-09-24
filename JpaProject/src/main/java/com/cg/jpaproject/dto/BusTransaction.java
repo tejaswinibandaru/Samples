@@ -18,8 +18,9 @@ public class BusTransaction {
 	@Column
 	private LocalDate date;
 	private Integer availableSeats;
-	@OneToMany(cascade = CascadeType.MERGE,mappedBy="transaction")
-	private List<Booking> bookings;
+	
+	@OneToOne(cascade = CascadeType.MERGE)
+	private Booking booking;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Bus bus;
 	private String transactionStatus;
@@ -29,13 +30,13 @@ public class BusTransaction {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BusTransaction(Integer transactionId, LocalDate date, Integer availableSeats, List<Booking> bookings,
+	public BusTransaction(Integer transactionId, LocalDate date, Integer availableSeats, Booking booking,
 			Bus bus, String transactionStatus, Integer deleteFlag) {
 		super();
 		this.transactionId = transactionId;
 		this.date = date;
 		this.availableSeats = availableSeats;
-		this.bookings = bookings;
+		this.booking = booking;
 		this.bus = bus;
 		this.transactionStatus = transactionStatus;
 		this.deleteFlag = deleteFlag;
@@ -44,7 +45,7 @@ public class BusTransaction {
 	@Override
 	public String toString() {
 		return "BusTransaction [transactionId=" + transactionId + ", date=" + date + ", availableSeats="
-				+ availableSeats + ", bookings=" + bookings + ", bus=" + bus + ", transactionStatus="
+				+ availableSeats + ", booking=" + booking + ", bus=" + bus + ", transactionStatus="
 				+ transactionStatus + ", deleteFlag=" + deleteFlag + "]";
 	}
 
@@ -53,7 +54,7 @@ public class BusTransaction {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((availableSeats == null) ? 0 : availableSeats.hashCode());
-		result = prime * result + ((bookings == null) ? 0 : bookings.hashCode());
+		result = prime * result + ((booking == null) ? 0 : booking.hashCode());
 		result = prime * result + ((bus == null) ? 0 : bus.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((deleteFlag == null) ? 0 : deleteFlag.hashCode());
@@ -76,10 +77,10 @@ public class BusTransaction {
 				return false;
 		} else if (!availableSeats.equals(other.availableSeats))
 			return false;
-		if (bookings == null) {
-			if (other.bookings != null)
+		if (booking == null) {
+			if (other.booking!= null)
 				return false;
-		} else if (!bookings.equals(other.bookings))
+		} else if (!booking.equals(other.booking))
 			return false;
 		if (bus == null) {
 			if (other.bus != null)
@@ -133,12 +134,12 @@ public class BusTransaction {
 		this.availableSeats = availableSeats;
 	}
 
-	public List<Booking> getBookings() {
-		return bookings;
+	public Booking getBooking() {
+		return booking;
 	}
 
-	public void setBookings(List<Booking> bookings) {
-		this.bookings = bookings;
+	public void setBooking(Booking bookings) {
+		this.booking = bookings;
 	}
 
 	public Bus getBus() {

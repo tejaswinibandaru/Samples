@@ -13,6 +13,7 @@ import com.cg.jpaproject.dao.UserDao;
 import com.cg.jpaproject.dao.UserDaoImpl;
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
+import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
 
 import com.cg.jpaproject.exception.BusException;
@@ -100,7 +101,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<BusTransaction> viewAllTransactions() {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.findAllTransactions();
+	}
+
+	@Override
+	public List<BusTransaction> viewTransactionsByDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		return userDao.findTransactionsByDate(date);
+	}
+
+	@Override
+	public BusDay addBusDay(BusDay day) {
+		// TODO Auto-generated method stub
+		return userDao.saveBusDay(day);
 	}
 
 }

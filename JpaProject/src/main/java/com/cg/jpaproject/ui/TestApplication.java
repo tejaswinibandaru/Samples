@@ -114,7 +114,7 @@ public class TestApplication {
 		busTransaction.setTransactionId(501);
 		busTransaction.setDate(LocalDate.now());
 		busTransaction.setBus(bus);
-		busTransaction.setBookings(bookings);
+		busTransaction.setBooking(booking);
 		busTransaction.setAvailableSeats(bus.getNoOfSeats());
 
 		System.out.println(service.addTransaction(busTransaction));

@@ -12,6 +12,7 @@ import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
 import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
+import com.cg.jpaproject.dto.Days;
 import com.cg.jpaproject.dto.Passenger;
 import com.cg.jpaproject.exception.BusException;
 import com.cg.jpaproject.service.UserService;
@@ -21,6 +22,10 @@ import com.cg.jpaproject.service.Validation;
 public class BusReservationSystem {
 	static UserService userService;
 	static int counter = 0;
+	static int day_counter=600;
+	static int passenger_counter=500;
+	static int booking_counter=200;
+	static int transaction_counter=100;
 	static Validation validation;
     static final String EXCEPTIONMSG="Exception occured: ";
 	public static void main(String[] args) throws BusException {
@@ -68,7 +73,7 @@ public class BusReservationSystem {
 		}
 	}
 
-	static void adminMenu() {
+	static void adminMenu() throws BusException {
 		validation = new Validation();
 		Scanner scanner = new Scanner(System.in);
 		
@@ -103,6 +108,7 @@ public class BusReservationSystem {
 			switch (choice) {
 			case 1:
 				// fetch details here
+				
 				System.out.println("Enter the bus name");
 				String busName = scanner.next();
 				String busType;
@@ -175,7 +181,10 @@ public class BusReservationSystem {
 					 * System.out.println(EXCEPTIONMSG + e.getMessage()); continue; } }
 					 */
 					BusDay day=new BusDay();
+					
+					day.setBusDayId(++day_counter);
 					day.setDay(input.toUpperCase());
+					userService.addBusDay(day);
 					days.add(day);
 				}
 
@@ -214,6 +223,7 @@ public class BusReservationSystem {
 					}
 				}
 				Bus bus = new Bus();
+				bus.setBusId(++counter);
 				bus.setBusName(busName);
 				bus.setBusType(busType);
 				bus.setBusClass(busClass);
@@ -299,7 +309,7 @@ public class BusReservationSystem {
 				break;
 			case 4:
 				for(Bus busOb:userService.viewAllBuses()) {
-					System.out.println(busOb.getBusId()+" "+busOb.getBusName()+" "+busOb.getNoOfSeats()+" "+busOb.getBusType()+" "+busOb.getBusClass()+" "+busOb.getSource()+" "+busOb.getDestination()+" "+busOb.getCostPerSeat());
+					System.out.println(busOb);
 				}
 				break;
 			case 5:
@@ -319,9 +329,9 @@ public class BusReservationSystem {
 					}
 				}
 				System.out.println("List of transactions");
-				for (BusTransaction busTransaction : userService.getTransactionsByDate(date)) {
+				for (BusTransaction busTransaction : userService.viewTransactionsByDate(date)) {
 					System.out.println(
-							busTransaction.getDate() + " " + busTransaction.getBus() + busTransaction.getBookings());
+							busTransaction.getDate() + " " + busTransaction.getBus() + busTransaction.getBooking());
 				}
 				break;
 			case 6:
@@ -342,7 +352,7 @@ public class BusReservationSystem {
 
 	}
 
-	static void customerMenu() {
+	static void customerMenu() throws BusException {
 		validation = new Validation();
 		Scanner scanner = new Scanner(System.in);
 		int runLoop = 1;
@@ -406,8 +416,10 @@ public class BusReservationSystem {
 						continue;
 					}
 				}
-
+				
 				List<Bus> busList = userService.viewBusByDay(date);
+				
+				System.out.println(busList);
 				List<Bus> runningBuses=new ArrayList<Bus>();
 				for(Bus busObj: busList) {
 					if(busObj.getSource().equalsIgnoreCase(source) && busObj.getDestination().equals(destination)) {
@@ -450,13 +462,25 @@ public class BusReservationSystem {
 								continue;
 							}
 						}
-						
-						boolean bookingStatus = userService.checkBusTransaction(date, busObj, passengersCount);
-						if (bookingStatus) {
+						BusTransaction busTransaction=new BusTransaction();
+						if(userService.viewAllTransactions()==null) {
+							busTransaction.setTransactionId(++transaction_counter);
+							busTransaction.setBus(busObj);
+							busTransaction.setDate(date);
+							busTransaction.setTransactionStatus("ACTIVE");
+							busTransaction.setDeleteFlag(0);
+							busTransaction.setAvailableSeats(busObj.getNoOfSeats());
+							busTransaction.setBooking(null);
+							System.out.println(userService.addTransaction(busTransaction));
+						}
+						if(busTransaction.getAvailableSeats()>=passengersCount) {
+							Booking booking=new Booking();
 							List<Passenger> passengersList = new ArrayList<Passenger>();
-							for (int j = 0; j < passengersCount; j++) {
+							for(int j=0;j<passengersCount;j++) {
+								
 								System.out.println("Enter Passenger " + j + 1 + " details: ");
 								Passenger passenger = new Passenger();
+								passenger.setPassengerId(++passenger_counter);
 								System.out.println("Name: ");
 								String passengerName = scanner.next();
 								passenger.setPassengerName(passengerName);
@@ -467,6 +491,15 @@ public class BusReservationSystem {
 								passenger.setPassengerGender(passengerGender);
 								passengersList.add(passenger);
 							}
+							
+							booking.setBookingId(++booking_counter);
+							booking.setBus(busObj);
+							booking.setDateOfJourney(date);
+							booking.setBusTransaction(busTransaction);
+							booking.setPassengers(passengersList);
+							booking.setBookingStatus("BOOKED");
+							booking.setTotalCost(passengersList.size()*busObj.getCostPerSeat());
+							booking.setDeleteFlag(0);
 							String paymentMode;
 							while (true) {
 								System.out.println("Enter the mode of payment(UPI/DC/CC/NB): ");
@@ -480,17 +513,37 @@ public class BusReservationSystem {
 									continue;
 								}
 							}
-
-							Booking booking = userService.createBooking(passengersList, date, busObj, paymentMode);
-							System.out.println("Booking details: ");
-							System.out.println(booking.getBookingId() + " " + booking.getDateOfJourney() + " "
-									+ booking.getModeOfPayment());
-							System.out.println("List of passengers");
-							for (Passenger p : booking.getPassengers()) {
-								System.out.println(p.getPassengerName() + " " + p.getPassengerAge() + " "
-										+ p.getPassengerGender());
-							}
-						} else {
+							booking.setModeOfPayment(paymentMode);
+							System.out.println(userService.createBooking(booking));
+							
+						}
+						/*
+						 * boolean bookingStatus = userService.checkBusTransaction(date, busObj,
+						 * passengersCount); if (bookingStatus) { List<Passenger> passengersList = new
+						 * ArrayList<Passenger>(); for (int j = 0; j < passengersCount; j++) {
+						 * System.out.println("Enter Passenger " + j + 1 + " details: "); Passenger
+						 * passenger = new Passenger(); System.out.println("Name: "); String
+						 * passengerName = scanner.next(); passenger.setPassengerName(passengerName);
+						 * int passengerAge = scanner.nextInt();
+						 * passenger.setPassengerAge(passengerAge); System.out.println("Gender(M/F)");
+						 * char passengerGender = scanner.next().charAt(0);
+						 * passenger.setPassengerGender(passengerGender); passengersList.add(passenger);
+						 * } String paymentMode; while (true) {
+						 * System.out.println("Enter the mode of payment(UPI/DC/CC/NB): "); paymentMode
+						 * = scanner.next(); try { validation.validatePaymentMode(paymentMode); break; }
+						 * catch (Exception e) {
+						 * 
+						 * System.out.println(EXCEPTIONMSG + e.getMessage()); continue; } }
+						 * 
+						 * Booking booking = userService.createBooking(passengersList, date, busObj,
+						 * paymentMode); System.out.println("Booking details: ");
+						 * System.out.println(booking.getBookingId() + " " + booking.getDateOfJourney()
+						 * + " " + booking.getModeOfPayment());
+						 * System.out.println("List of passengers"); for (Passenger p :
+						 * booking.getPassengers()) { System.out.println(p.getPassengerName() + " " +
+						 * p.getPassengerAge() + " " + p.getPassengerGender()); } }
+						 */
+						else {
 							System.out.println("Bus is full. Can't proceed with booking");
 							continue;
 						}
@@ -500,37 +553,29 @@ public class BusReservationSystem {
 			case 2:
 				break;
 			case 3:
-				System.out.println("List of your bookings: ");
-				for (Booking booking : userService.viewTicketList()) {
-					System.out.println(booking.getBookingId() + " " + booking.getDateOfJourney() + " "
-							+ booking.getModeOfPayment() + " " + booking.getPassengers());
-				}
+				/*
+				 * System.out.println("List of your bookings: "); for (Booking booking :
+				 * userService.viewTicketList()) { System.out.println(booking.getBookingId() +
+				 * " " + booking.getDateOfJourney() + " " + booking.getModeOfPayment() + " " +
+				 * booking.getPassengers()); }
+				 */
 				break;
 			case 4:
-				Integer bookingId;
-				while (true) {
-					System.out.println("Enter the booking id you want to cancel the booking for: ");
-					input = scanner.next(); // INputMismatchExcp
-					try {
-						bookingId = validation.validateBigIntegerChoice(input);
-
-						for (Booking booking : userService.viewTicketList()) {
-							if (booking.getBookingId().equals(bookingId)) {
-								int cancelStatus = userService.cancelTicket(booking);
-								if (cancelStatus == 1) {
-									System.out.println("Booking cancelled");
-								} else {
-									System.out.println("Error in cancelling the booking");
-								}
-							}
-						}
-						break;
-					} catch (RuntimeException e) {
-
-						System.out.println(EXCEPTIONMSG + e.getMessage());
-						continue;
-					}
-				}
+				/*
+				 * Integer bookingId; while (true) { System.out.
+				 * println("Enter the booking id you want to cancel the booking for: "); input =
+				 * scanner.next(); // INputMismatchExcp try { bookingId =
+				 * validation.validateBigIntegerChoice(input);
+				 * 
+				 * for (Booking booking : userService.viewTicketList()) { if
+				 * (booking.getBookingId().equals(bookingId)) { int cancelStatus =
+				 * userService.cancelTicket(booking); if (cancelStatus == 1) {
+				 * System.out.println("Booking cancelled"); } else {
+				 * System.out.println("Error in cancelling the booking"); } } } break; } catch
+				 * (RuntimeException e) {
+				 * 
+				 * System.out.println(EXCEPTIONMSG + e.getMessage()); continue; } }
+				 */
 				break;
 
 			case 5:
