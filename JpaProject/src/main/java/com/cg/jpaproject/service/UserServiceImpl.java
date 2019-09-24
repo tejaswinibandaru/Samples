@@ -13,12 +13,9 @@ import com.cg.jpaproject.dao.UserDao;
 import com.cg.jpaproject.dao.UserDaoImpl;
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
-import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
-
-import com.cg.jpaproject.exception.BusException;
-
 import com.cg.jpaproject.dto.User;
+import com.cg.jpaproject.exception.BusException;
 
 
 public class UserServiceImpl implements UserService {
@@ -54,12 +51,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public List<Bus> viewBusByDay(LocalDate date) {
-		// TODO Auto-generated method stub
-		return userDao.findBusByDay(date);
-	}
-
+	
 	public List<Object[]> viewBusByRoutes(String source, String destination) {
 		// TODO Auto-generated method stub
 		return userDao.findBusByRoutes(source, destination);}
@@ -110,10 +102,17 @@ public class UserServiceImpl implements UserService {
 		return userDao.findTransactionsByDate(date);
 	}
 
+
 	@Override
-	public BusDay addBusDay(BusDay day) {
+	public BusTransaction viewTransactionById(Integer busTransactionId) {
 		// TODO Auto-generated method stub
-		return userDao.saveBusDay(day);
+		return userDao.findTransactionById(busTransactionId);
+	}
+
+	@Override
+	public BusTransaction updateTransaction(Integer busTransactionId) {
+		// TODO Auto-generated method stub
+		return userDao.updateTransaction(busTransactionId);
 	}
 
 }

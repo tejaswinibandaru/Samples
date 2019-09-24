@@ -39,14 +39,6 @@ public class Bus {
 	@Column(name="bus_class")
 	private BusClass busClass;
 	
-	@Column(name="days_of_journey")
-	@ManyToMany(cascade = CascadeType.PERSIST)
-	@JoinTable(
-	        joinColumns = { @JoinColumn(name = "busId") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "busDayId") }
-	    )
-	private List<BusDay> days;
-	
 	@Column(name="source")
 	private String source;
 	
@@ -72,7 +64,7 @@ public class Bus {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Bus(Integer busId, String busName, String busType, String busClass, List<BusDay> days, String source,
+	public Bus(Integer busId, String busName, String busType, String busClass, String source,
 			String destination, Integer noOfSeats, Integer delete_flag, LocalTime startTime, LocalTime endTime,
 			Double costPerSeat) {
 		super();
@@ -80,7 +72,6 @@ public class Bus {
 		this.busName = busName;
 		this.busType = BusType.valueOf(busType);
 		this.busClass = BusClass.valueOf(busClass);
-		this.days = days;
 		this.source = source;
 		this.destination = destination;
 		this.noOfSeats = noOfSeats;
@@ -120,14 +111,6 @@ public class Bus {
 
 	public void setBusClass(String busClass) {
 		this.busClass = BusClass.valueOf(busClass.toUpperCase());
-	}
-
-	public List<BusDay> getDays() {
-		return days;
-	}
-
-	public void setDays(List<BusDay> days) {
-		this.days = days;
 	}
 
 	public String getSource() {
@@ -214,7 +197,7 @@ public class Bus {
 	@Override
 	public String toString() {
 		return "Bus [busId=" + busId + ", busName=" + busName + ", busType=" + busType + ", busClass=" + busClass
-				+ ", days=" + days + ", source=" + source + ", destination=" + destination + ", noOfSeats=" + noOfSeats
+				+ ", source=" + source + ", destination=" + destination + ", noOfSeats=" + noOfSeats
 				+ ", deleteFlag=" + deleteFlag + ", startTime=" + startTime + ", endTime=" + endTime
 				+ ", costPerSeat=" + costPerSeat + "]";
 	}

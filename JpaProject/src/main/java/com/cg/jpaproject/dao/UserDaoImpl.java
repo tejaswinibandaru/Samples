@@ -1,7 +1,6 @@
 package com.cg.jpaproject.dao;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -11,9 +10,7 @@ import javax.persistence.TypedQuery;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
-import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
-import com.cg.jpaproject.dto.Days;
 import com.cg.jpaproject.dto.Passenger;
 import com.cg.jpaproject.dto.User;
 
@@ -33,7 +30,6 @@ public class UserDaoImpl implements UserDao {
 		transaction.begin();
 		bus.setDelete_flag(0);
 		Bus busDays = entityManager.merge(bus);
-		busDays.setDays(busDays.getDays());
 		entityManager.persist(busDays);
 		entityManager.flush();
 		transaction.commit();
@@ -57,29 +53,6 @@ public class UserDaoImpl implements UserDao {
 		TypedQuery<Bus> query = entityManager.createQuery("SELECT bus FROM Bus bus where bus.deleteFlag = 0",
 				Bus.class);
 		return query.getResultList();
-	}
-
-	public List<Bus> findBusByDay(LocalDate date) {
-		// TODO Auto-generated method stub
-
-		String dayString=date.getDayOfWeek().toString();
-		Days day=Days.valueOf(dayString);
-//		Query query=entityManager.createQuery("SELECT bus.busName,bus.busType,bus.busClass,bus.costPerSeat,bus.source,bus.destination FROM Bus bus INNER JOIN BusDay busDay ON bus.busId=busDay.busId WHERE busDay.day=:dayValue");
-		Query query=entityManager.createQuery("SELECT busday FROM BusDay busday WHERE busday.day=:dayValue");
-		query.setParameter("dayValue", day);
-		BusDay busDay= (BusDay) query.getSingleResult();
-		
-		/*
-		 * query.setParameter("source", source); query.setParameter("destination",
-		 * destination);
-		 */
-		
-		return busDay.getBuses();
-
-		//TypedQuery<Bus> query=entityManager.createQuery("SELECT bus FROM Bus bus where bus.deleteFlag = 0", Bus.class);
-		// TypedQuery<Bus> query=entityManager.createQuery("SELECT bus FROM Bus bus
-		// where bus.deleteFlag = 0", Bus.class);
-
 	}
 
 	public List<Object[]> findBusByRoutes(String source, String destination) {
@@ -213,18 +186,6 @@ public class UserDaoImpl implements UserDao {
 		return query.getResultList();
 	}
 
-	@Override
-	public BusDay saveBusDay(BusDay day) {
-		// TODO Auto-generated method stub
-		EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
-		BusDay dayToBeUpdated = entityManager.merge(day);
-		dayToBeUpdated.setBuses(dayToBeUpdated.getBuses());
-		entityManager.persist(dayToBeUpdated);
-		entityManager.flush();
-		transaction.commit();
-		return dayToBeUpdated;
-	}
 
 	@Override
 	public BusTransaction findTransactionById(Integer transactionId) {
@@ -235,10 +196,12 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public BusTransaction updateTransaction(Integer transactionId) {
 		// TODO Auto-generated method stub
+		EntityTransaction transaction=entityManager.getTransaction();
 		BusTransaction busTransaction=findTransactionById(transactionId);
+		busTransaction=entityManager.merge(busTransaction);
 		busTransaction.setBooking(busTransaction.getBooking());
-		entityManager.merge(busTransaction)
-		return null;
+		transaction.commit();
+		return busTransaction;
 	}
 
 }

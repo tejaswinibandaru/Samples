@@ -1,7 +1,5 @@
 package com.cg.jpaproject.ui;
 
-import java.math.BigInteger;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,7 +10,6 @@ import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
 import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
-import com.cg.jpaproject.dto.Days;
 import com.cg.jpaproject.dto.Passenger;
 import com.cg.jpaproject.exception.BusException;
 import com.cg.jpaproject.service.UserService;
@@ -167,26 +164,6 @@ public class BusReservationSystem {
 						continue;
 					}
 				}
-				List<BusDay> days = new ArrayList<BusDay>();
-				for (int i = 0; i < noOfDays; i++) {
-					System.out.println("Enter the days starting from Monday to Sunday: ");
-					input = scanner.next();
-					/*
-					 * while (true) {
-					 * 
-					 * 
-					 * try { day = validation.validateDayChoice(input); break; } catch
-					 * (RuntimeException e) {
-					 * 
-					 * System.out.println(EXCEPTIONMSG + e.getMessage()); continue; } }
-					 */
-					BusDay day=new BusDay();
-					
-					day.setBusDayId(++day_counter);
-					day.setDay(input.toUpperCase());
-					userService.addBusDay(day);
-					days.add(day);
-				}
 
 				String source;
 				String destination;
@@ -228,7 +205,6 @@ public class BusReservationSystem {
 				bus.setBusType(busType);
 				bus.setBusClass(busClass);
 				bus.setNoOfSeats(busSeats);
-				bus.setDays(days);
 				bus.setSource(source);
 				bus.setDestination(destination);
 				bus.setCostPerSeat(costPerSeat);
@@ -240,7 +216,6 @@ public class BusReservationSystem {
 				System.out.println("Bus Type: " + bus.getBusType());
 				System.out.println("Bus Class: " + bus.getBusClass());
 				System.out.println("Number of Seats: " + bus.getNoOfSeats());
-				System.out.println("Days Of Journey: " + bus.getDays());
 				System.out.println("Source: " + bus.getSource());
 				System.out.println("Destination: " + bus.getDestination());
 				System.out.println("Cost per seat: " + bus.getCostPerSeat());
@@ -417,7 +392,6 @@ public class BusReservationSystem {
 					}
 				}
 				
-				List<Bus> busList = userService.viewBusByDay(date);
 				
 				System.out.println(busList);
 				List<Bus> runningBuses=new ArrayList<Bus>();
@@ -500,6 +474,7 @@ public class BusReservationSystem {
 							booking.setBookingStatus("BOOKED");
 							booking.setTotalCost(passengersList.size()*busObj.getCostPerSeat());
 							booking.setDeleteFlag(0);
+							userService.updateTransaction(busTransaction.getTransactionId());
 							String paymentMode;
 							while (true) {
 								System.out.println("Enter the mode of payment(UPI/DC/CC/NB): ");

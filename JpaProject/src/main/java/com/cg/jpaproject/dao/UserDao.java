@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.cg.jpaproject.dto.Booking;
 import com.cg.jpaproject.dto.Bus;
-import com.cg.jpaproject.dto.BusDay;
 import com.cg.jpaproject.dto.BusTransaction;
 import com.cg.jpaproject.dto.Passenger;
 import com.cg.jpaproject.dto.User;
@@ -13,10 +12,8 @@ import com.cg.jpaproject.dto.User;
 public interface UserDao {
 	
 	public Bus saveBus(Bus bus);
-	public BusDay saveBusDay(BusDay day);
 	public Integer removeBus(Integer busId);
 	public List<Bus> findAllBuses();
-	public List<Bus> findBusByDay(LocalDate date);
 	public List<Object[]> findBusByRoutes(String source, String destination);
 	public Bus findBusById(Integer busId);
 	

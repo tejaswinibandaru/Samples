@@ -56,10 +56,12 @@ public class TestApplication {
 		BusDay bd1 = new BusDay();
 		bd1.setBusDayId(1);
 		bd1.setDay("sunday".toUpperCase());
+		service.addBusDay(bd1);
 		days.add(bd1);
 		BusDay bd2 = new BusDay();
 		bd2.setBusDayId(2);
 		bd2.setDay("monday".toUpperCase());
+		service.addBusDay(bd2);
 		days.add(bd2);
 		bus.setDays(days);
 
@@ -79,6 +81,8 @@ public class TestApplication {
 		bus.setDelete_flag(0);
 
 		service.addBusDetails(bus);
+		bd1.setBus(bus);
+		bd2.setBus(bus);
 
 		Passenger p1 = new Passenger();
 		p1.setPassengerId(1001);
@@ -107,7 +111,6 @@ public class TestApplication {
 		booking.setUser(user);
 
 		bookings.add(booking);
-
 		System.out.println(service.createBooking(booking));
 
 		BusTransaction busTransaction = new BusTransaction();
