@@ -115,4 +115,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateTransaction(busTransactionId);
 	}
 
+	@Override
+	public Bus viewBusById(Integer busId) {
+		// TODO Auto-generated method stub
+		return userDao.findBusById(busId);
+	}
+
 }

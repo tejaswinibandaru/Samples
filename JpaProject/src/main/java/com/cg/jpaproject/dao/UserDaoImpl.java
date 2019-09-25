@@ -28,12 +28,10 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		bus.setDelete_flag(0);
-		Bus busDays = entityManager.merge(bus);
-		entityManager.persist(busDays);
+		entityManager.persist(bus);
 		entityManager.flush();
 		transaction.commit();
-		return busDays;
+		return bus;
 	}
 
 	public Integer removeBus(Integer busId) {
@@ -41,6 +39,9 @@ public class UserDaoImpl implements UserDao {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		Bus busUpdate = entityManager.find(Bus.class, busId);
+		if(busUpdate==null) {
+			return 0;
+		}
 		busUpdate.setDelete_flag(1);
 		entityManager.merge(busUpdate);
 
@@ -57,7 +58,7 @@ public class UserDaoImpl implements UserDao {
 
 	public List<Object[]> findBusByRoutes(String source, String destination) {
 		// TODO Auto-generated method stub
-		Query query=entityManager.createQuery("SELECT bus.busName,bus.busType,bus.busClass,bus.costPerSeat FROM Bus bus WHERE bus.source=:source AND bus.destination=:destination");
+		Query query=entityManager.createQuery("SELECT bus.busId,bus.busName,bus.busType,bus.busClass,bus.costPerSeat FROM Bus bus WHERE bus.source=:source AND bus.destination=:destination");
 		query.setParameter("source", source);
 		query.setParameter("destination", destination);
 		List<Object[]> results=query.getResultList();
@@ -66,20 +67,17 @@ public class UserDaoImpl implements UserDao {
 
 	public Bus findBusById(Integer busId) {
 		// TODO Auto-generated method stub
-		return null;
+		return entityManager.find(Bus.class, busId);
 	}
 
 	public Booking saveBooking(Booking booking) {
 		// TODO Auto-generated method stub
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		BusTransaction busTransaction = booking.getBusTransaction();
 		Booking bookingObj = entityManager.merge(booking);
 		// deleteFlag & bookingStatus
-		//
 		bookingObj.setBus(bookingObj.getBus());
 		bookingObj.setPassengers(bookingObj.getPassengers());
-		bookingObj.setBusTransaction(busTransaction);
 		entityManager.persist(bookingObj);
 		entityManager.flush();
 		transaction.commit();
@@ -92,7 +90,7 @@ public class UserDaoImpl implements UserDao {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		Booking removeBooking = entityManager.find(Booking.class, bookingId);
-		// removeBooking.setDeleteFlag(1);
+		removeBooking.setDeleteFlag(1);
 		entityManager.merge(removeBooking);
 
 		transaction.commit();

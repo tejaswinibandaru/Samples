@@ -1,5 +1,6 @@
 package com.cg.jpaproject.dto;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,9 +14,6 @@ public class Passenger {
 	private String passengerName;
 	private Integer passengerAge;
 	private Character passengerGender;
-	@ManyToOne
-	@JoinColumn(name="booking_fk")
-	private Booking booking;
 	
 	public Passenger() {
 		// TODO Auto-generated constructor stub

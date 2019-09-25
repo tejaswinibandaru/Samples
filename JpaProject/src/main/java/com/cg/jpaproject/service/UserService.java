@@ -12,6 +12,7 @@ public interface UserService {
 	public Bus addBusDetails(Bus bus);
 	public Integer removeBus(Integer busId);
 	public List<Bus> viewAllBuses();
+	public Bus viewBusById(Integer busId);
 	public List<Object[]> viewBusByRoutes(String source,String destination);
 	
 	

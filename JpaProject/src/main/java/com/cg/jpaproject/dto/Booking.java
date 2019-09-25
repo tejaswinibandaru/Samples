@@ -23,13 +23,12 @@ public class Booking {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Bus bus;
 	
-	@OneToMany(cascade = CascadeType.MERGE,mappedBy = "booking")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn
 	private List<Passenger> passengers;
 	private String modeOfPayment;
 	private Double totalCost;
 	
-	@OneToOne(cascade = CascadeType.MERGE)
-	private BusTransaction busTransaction;
 	
 	@OneToOne
 	@JoinColumn(name = "userId")
@@ -43,7 +42,7 @@ public class Booking {
 	}
 
 	public Booking(Integer bookingId, LocalDate dateOfJourney, Bus bus, List<Passenger> passengers,
-			String modeOfPayment, Double totalCost, BusTransaction busTransaction, User user, String bookingStatus,
+			String modeOfPayment, Double totalCost, User user, String bookingStatus,
 			Integer deleteFlag) {
 		super();
 		this.bookingId = bookingId;
@@ -52,7 +51,6 @@ public class Booking {
 		this.passengers = passengers;
 		this.modeOfPayment = modeOfPayment;
 		this.totalCost = totalCost;
-		this.busTransaction = busTransaction;
 		this.user = user;
 		this.bookingStatus = bookingStatus;
 		this.deleteFlag = deleteFlag;
@@ -61,8 +59,7 @@ public class Booking {
 	@Override
 	public String toString() {
 		return "Booking [bookingId=" + bookingId + ", dateOfJourney=" + dateOfJourney + ", bus=" + bus + ", passengers="
-				+ passengers + ", modeOfPayment=" + modeOfPayment + ", totalCost=" + totalCost + ", busTransaction="
-				+ busTransaction + ", user=" + user + ", bookingStatus=" + bookingStatus + ", deleteFlag=" + deleteFlag
+				+ passengers + ", modeOfPayment=" + modeOfPayment + ", totalCost=" + totalCost  + ", user=" + user + ", bookingStatus=" + bookingStatus + ", deleteFlag=" + deleteFlag
 				+ "]";
 	}
 
@@ -78,7 +75,6 @@ public class Booking {
 		result = prime * result + ((modeOfPayment == null) ? 0 : modeOfPayment.hashCode());
 		result = prime * result + ((passengers == null) ? 0 : passengers.hashCode());
 		result = prime * result + ((totalCost == null) ? 0 : totalCost.hashCode());
-		result = prime * result + ((busTransaction == null) ? 0 : busTransaction.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -131,11 +127,6 @@ public class Booking {
 			if (other.totalCost != null)
 				return false;
 		} else if (!totalCost.equals(other.totalCost))
-			return false;
-		if (busTransaction == null) {
-			if (other.busTransaction != null)
-				return false;
-		} else if (!busTransaction.equals(other.busTransaction))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -191,14 +182,6 @@ public class Booking {
 
 	public void setTotalCost(Double totalCost) {
 		this.totalCost = totalCost;
-	}
-
-	public BusTransaction getBusTransaction() {
-		return busTransaction;
-	}
-
-	public void setBusTransaction(BusTransaction busTransaction) {
-		this.busTransaction = busTransaction;
 	}
 
 	public User getUser() {
