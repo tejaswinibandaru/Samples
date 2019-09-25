@@ -5,6 +5,11 @@
 
         <!-- Entity classes -->
         <class>com.cg.jpaproject.dto.Bus</class>
+        <class>com.cg.jpaproject.dto.Passenger</class>
+        <class>com.cg.jpaproject.dto.Booking</class>
+        <class>com.cg.jpaproject.dto.User</class>
+        <class>com.cg.jpaproject.dto.BusTransaction</class>
+        
         <properties>
             <!-- The JDBC driver of your database -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

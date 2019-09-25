@@ -16,11 +16,11 @@ public class Passenger {
 	private Integer passengerAge;
 	private Character passengerGender;
 	
-	static int passsengerStaticId=1;
+	static int passengerStaticId=1;
 	
 	public Passenger() {
 		// TODO Auto-generated constructor stub
-		passengerId = passsengerStaticId++;
+		passengerId = passengerStaticId++;
 	}
 
 	public Passenger(Integer passengerId, String passengerName, Integer passengerAge, Character passengerGender) {
