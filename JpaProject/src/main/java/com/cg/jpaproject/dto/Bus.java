@@ -26,7 +26,6 @@ import javax.persistence.Transient;
 @Table(name="bus")
 public class Bus {
 	@Id
-	@GeneratedValue
 	private Integer busId;
 	
 	@Column(name="bus_name")
@@ -60,9 +59,12 @@ public class Bus {
 	
 	@Column(name="cost_per_seat")
 	private Double costPerSeat;
+	
+	static int busStaticId=1;
 
 	public Bus() {
 		// TODO Auto-generated constructor stub
+		busId = busStaticId++;
 	}
 
 	public Bus(Integer busId, String busName, String busType, String busClass, String source,

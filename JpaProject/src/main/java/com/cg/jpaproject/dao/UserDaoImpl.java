@@ -92,7 +92,7 @@ public class UserDaoImpl implements UserDao {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		Booking removeBooking = entityManager.find(Booking.class, bookingId);
-		removeBooking.setDeleteFlag(1);
+		removeBooking.setBookingStatus("CANCELLED");
 		entityManager.merge(removeBooking);
 
 		transaction.commit();
@@ -106,7 +106,7 @@ public class UserDaoImpl implements UserDao {
 
 	public List<Booking> findAllBookings() {
 		// TODO Auto-generated method stub
-		TypedQuery<Booking> query = entityManager.createQuery("SELECT booking FROM Booking booking", Booking.class);
+		TypedQuery<Booking> query = entityManager.createQuery("SELECT booking FROM Booking booking ", Booking.class);
 		return query.getResultList();
 	}
 

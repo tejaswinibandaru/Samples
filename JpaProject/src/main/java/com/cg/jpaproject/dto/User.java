@@ -14,7 +14,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue
 	private Integer userId;
 	private String username;
 	private String pass;
@@ -26,8 +25,11 @@ public class User {
 	private List<Booking> bookingsList;
 	private Integer deleteFlag;
 	
+	static int userStaticId=1;
+	
 	public User() {
 		// TODO Auto-generated constructor stub
+		userId = userStaticId++;
 	}
 
 	public User(Integer userId, String username, String pass, Character userType, String email, Integer phoneNumber,

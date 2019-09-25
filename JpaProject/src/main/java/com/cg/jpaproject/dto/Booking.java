@@ -17,7 +17,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Booking {
 	@Id
-	@GeneratedValue
 	private Integer bookingId;
 	@Column
 	private LocalDate dateOfJourney;
@@ -32,9 +31,12 @@ public class Booking {
 	private Double totalCost;
 	private String bookingStatus;
 	private Integer deleteFlag;
-
+	
+	static int bookingStaticId=1;
+	
 	public Booking() {
 		// TODO Auto-generated constructor stub
+		bookingId=bookingStaticId++;
 	}
 
 	public Booking(Integer bookingId, LocalDate dateOfJourney, Bus bus, List<Passenger> passengers,

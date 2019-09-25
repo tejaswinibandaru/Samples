@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
 	public List<Booking> viewAllBookings() {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.findAllBookings();
 	}
 	
 	public List<Object[]> viewBusByRoutes(String source, String destination) {

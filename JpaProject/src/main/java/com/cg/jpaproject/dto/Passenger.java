@@ -11,14 +11,16 @@ import javax.persistence.ManyToOne;
 public class Passenger {
 	
 	@Id
-	@GeneratedValue
 	private Integer passengerId;
 	private String passengerName;
 	private Integer passengerAge;
 	private Character passengerGender;
 	
+	static int passsengerStaticId=1;
+	
 	public Passenger() {
 		// TODO Auto-generated constructor stub
+		passengerId = passsengerStaticId++;
 	}
 
 	public Passenger(Integer passengerId, String passengerName, Integer passengerAge, Character passengerGender) {
