@@ -334,7 +334,9 @@ public class BRSApplication {
 					}
 					break;
 				case 2:// view
-					System.out.println(userService.viewAllBookings());
+					for (Booking booking : userService.viewAllBookings()) {
+						System.out.println(booking.toString());
+					}
 					break;
 
 				case 3:// cancel
