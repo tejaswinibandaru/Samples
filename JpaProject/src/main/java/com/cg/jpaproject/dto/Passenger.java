@@ -2,6 +2,7 @@ package com.cg.jpaproject.dto;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToOne;
 public class Passenger {
 	
 	@Id
+	@GeneratedValue
 	private Integer passengerId;
 	private String passengerName;
 	private Integer passengerAge;

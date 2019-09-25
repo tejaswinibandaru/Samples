@@ -4,23 +4,26 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
 public class User {
 	@Id
+	@GeneratedValue
 	private Integer userId;
 	private String username;
 	private String pass;
 	private Character userType;
 	private String email;
 	private Integer phoneNumber;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinColumn
 	private List<Booking> bookingsList;
-	@OneToMany
-	private List<BusTransaction> transactionsList;
 	private Integer deleteFlag;
 	
 	public User() {
@@ -28,7 +31,7 @@ public class User {
 	}
 
 	public User(Integer userId, String username, String pass, Character userType, String email, Integer phoneNumber,
-			List<Booking> bookingsList, List<BusTransaction> transactionsList, Integer deleteFlag) {
+			List<Booking> bookingsList, Integer deleteFlag) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -37,15 +40,13 @@ public class User {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.bookingsList = bookingsList;
-		this.transactionsList = transactionsList;
 		this.deleteFlag = deleteFlag;
 	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", pass=" + pass + ", userType=" + userType
-				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", bookingsList=" + bookingsList
-				+ ", transactionsList=" + transactionsList + ", deleteFlag=" + deleteFlag + "]";
+				+ ", email=" + email + ", phoneNumber=" + phoneNumber + ", bookingsList=" + bookingsList + ", deleteFlag=" + deleteFlag + "]";
 	}
 
 	@Override
@@ -57,7 +58,6 @@ public class User {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((pass == null) ? 0 : pass.hashCode());
 		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-		result = prime * result + ((transactionsList == null) ? 0 : transactionsList.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((userType == null) ? 0 : userType.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -97,11 +97,6 @@ public class User {
 			if (other.phoneNumber != null)
 				return false;
 		} else if (!phoneNumber.equals(other.phoneNumber))
-			return false;
-		if (transactionsList == null) {
-			if (other.transactionsList != null)
-				return false;
-		} else if (!transactionsList.equals(other.transactionsList))
 			return false;
 		if (userId == null) {
 			if (other.userId != null)
@@ -175,14 +170,6 @@ public class User {
 
 	public void setBookingsList(List<Booking> bookingsList) {
 		this.bookingsList = bookingsList;
-	}
-
-	public List<BusTransaction> getTransactionsList() {
-		return transactionsList;
-	}
-
-	public void setTransactionsList(List<BusTransaction> transactionsList) {
-		this.transactionsList = transactionsList;
 	}
 
 	public Integer getDeleteFlag() {

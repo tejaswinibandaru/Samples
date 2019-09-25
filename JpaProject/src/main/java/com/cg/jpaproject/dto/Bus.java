@@ -26,6 +26,7 @@ import javax.persistence.Transient;
 @Table(name="bus")
 public class Bus {
 	@Id
+	@GeneratedValue
 	private Integer busId;
 	
 	@Column(name="bus_name")

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,24 +17,19 @@ import javax.persistence.OneToOne;
 @Entity
 public class Booking {
 	@Id
+	@GeneratedValue
 	private Integer bookingId;
 	@Column
 	private LocalDate dateOfJourney;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Bus bus;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.MERGE)
 	@JoinColumn
 	private List<Passenger> passengers;
 	private String modeOfPayment;
 	private Double totalCost;
-	
-	
-	@OneToOne
-	@JoinColumn(name = "userId")
-	private User user;
-	
 	private String bookingStatus;
 	private Integer deleteFlag;
 
@@ -42,7 +38,7 @@ public class Booking {
 	}
 
 	public Booking(Integer bookingId, LocalDate dateOfJourney, Bus bus, List<Passenger> passengers,
-			String modeOfPayment, Double totalCost, User user, String bookingStatus,
+			String modeOfPayment, Double totalCost, String bookingStatus,
 			Integer deleteFlag) {
 		super();
 		this.bookingId = bookingId;
@@ -51,7 +47,6 @@ public class Booking {
 		this.passengers = passengers;
 		this.modeOfPayment = modeOfPayment;
 		this.totalCost = totalCost;
-		this.user = user;
 		this.bookingStatus = bookingStatus;
 		this.deleteFlag = deleteFlag;
 	}
@@ -59,7 +54,7 @@ public class Booking {
 	@Override
 	public String toString() {
 		return "Booking [bookingId=" + bookingId + ", dateOfJourney=" + dateOfJourney + ", bus=" + bus + ", passengers="
-				+ passengers + ", modeOfPayment=" + modeOfPayment + ", totalCost=" + totalCost  + ", user=" + user + ", bookingStatus=" + bookingStatus + ", deleteFlag=" + deleteFlag
+				+ passengers + ", modeOfPayment=" + modeOfPayment + ", totalCost=" + totalCost  + ", bookingStatus=" + bookingStatus + ", deleteFlag=" + deleteFlag
 				+ "]";
 	}
 
@@ -75,7 +70,6 @@ public class Booking {
 		result = prime * result + ((modeOfPayment == null) ? 0 : modeOfPayment.hashCode());
 		result = prime * result + ((passengers == null) ? 0 : passengers.hashCode());
 		result = prime * result + ((totalCost == null) ? 0 : totalCost.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -128,11 +122,6 @@ public class Booking {
 				return false;
 		} else if (!totalCost.equals(other.totalCost))
 			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
-			return false;
 		return true;
 	}
 
@@ -182,14 +171,6 @@ public class Booking {
 
 	public void setTotalCost(Double totalCost) {
 		this.totalCost = totalCost;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public String getBookingStatus() {

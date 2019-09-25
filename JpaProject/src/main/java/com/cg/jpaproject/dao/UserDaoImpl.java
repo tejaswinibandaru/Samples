@@ -28,6 +28,7 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
+		bus.setBusId(bus.getBusId());
 		entityManager.persist(bus);
 		entityManager.flush();
 		transaction.commit();
@@ -76,6 +77,7 @@ public class UserDaoImpl implements UserDao {
 		transaction.begin();
 		Booking bookingObj = entityManager.merge(booking);
 		// deleteFlag & bookingStatus
+		bookingObj.setBookingId(booking.getBookingId());
 		bookingObj.setBus(bookingObj.getBus());
 		bookingObj.setPassengers(bookingObj.getPassengers());
 		entityManager.persist(bookingObj);
@@ -142,8 +144,10 @@ public class UserDaoImpl implements UserDao {
 		// TODO Auto-generated method stub
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
+		user.setBookingsList(user.getBookingsList());
 		user.setDeleteFlag(0);
 		User userSave = entityManager.merge(user);
+		user.setUserId(user.getUserId());
 		entityManager.persist(userSave);
 		entityManager.flush();
 		transaction.commit();
