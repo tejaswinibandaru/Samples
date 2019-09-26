@@ -29,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee searchEmployee(Integer empId) {
 		// TODO Auto-generated method stub
-		return null;
+		return employeedao.searchEmployee(empId);
 	}
 
 	@Override

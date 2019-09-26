@@ -27,6 +27,11 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	@Override
 	public Employee searchEmployee(Integer empId) {
 		// TODO Auto-generated method stub
+		for(Employee employee:employees) {
+			if(employee.getEmpId()==empId) {
+				return employee;
+			}
+		}
 		return null;
 	}
 

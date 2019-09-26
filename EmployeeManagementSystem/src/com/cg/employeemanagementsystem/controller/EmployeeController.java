@@ -28,13 +28,19 @@ public class EmployeeController {
 	}
 	@RequestMapping(value = "/pagesubmit",method=RequestMethod.POST)
 	public String addEmployeeData(@ModelAttribute("employee_details") Employee employee) {
-		employeeservice.addEmployee(employee);
+		System.out.println(employeeservice.addEmployee(employee));
 		return "home";
 	}
 	@RequestMapping(value="/view_all",method = RequestMethod.GET)
 	public ModelAndView showAllEmployees() {
 		List<Employee> employees=employeeservice.viewAllEmployees();
-		return new ModelAndView("viewAllProducts", "employeedata", employees);
+		System.out.println(employees);
+		return new ModelAndView("viewAllEmployee", "employeedata", employees);
+	}
+	
+	@RequestMapping(value="/search_employee",method = RequestMethod.GET)
+	public String searchEmployee(Integer empId) {
+		return "searchEmployee";
 	}
 	
 

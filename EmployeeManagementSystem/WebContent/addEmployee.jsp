@@ -15,19 +15,19 @@
 <table>
 <tr>
 <td>Employee Id: </td>
-<td><add:input path=""/></td>
+<td><add:input path="empId"/></td>
 </tr>
 <tr>
 <td>Employee Name: </td>
-<td><add:input path=""/></td>
+<td><add:input path="empName"/></td>
 </tr>
 <tr>
 <td>Employee Salary: </td>
-<td><add:input path=""/></td>
+<td><add:input path="empSalary"/></td>
 </tr>
 <tr>
 <td>Employee Designation: </td>
-<td><add:input path=""/></td>
+<td><add:input path="designation"/></td>
 </tr>
 </table>
 <input type="submit" value="Add employee"/>
