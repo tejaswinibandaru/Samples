@@ -121,10 +121,10 @@ public class UserDaoImpl implements UserDao {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		BusTransaction transactionObj = entityManager.merge(busTransaction);
-		transactionObj.setBooking(transactionObj.getBooking());
+		//transactionObj.setBooking(transactionObj.getBooking());
 		transactionObj.setBus(transactionObj.getBus());
 		transactionObj.setDeleteFlag(0); // deleteFlag and transactionStatus
-		transactionObj.setTransactionStatus("ACTIVE");
+		//transactionObj.setTransactionStatus("ACTIVE");
 		entityManager.persist(transactionObj);
 		entityManager.flush();
 		transaction.commit();
@@ -201,7 +201,7 @@ public class UserDaoImpl implements UserDao {
 		EntityTransaction transaction=entityManager.getTransaction();
 		BusTransaction busTransaction=findTransactionById(transactionId);
 		busTransaction=entityManager.merge(busTransaction);
-		busTransaction.setBooking(busTransaction.getBooking());
+		//busTransaction.setBooking(busTransaction.getBooking());
 		transaction.commit();
 		return busTransaction;
 	}
