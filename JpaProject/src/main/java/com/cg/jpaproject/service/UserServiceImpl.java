@@ -121,4 +121,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.findBusById(busId);
 	}
 
+	@Override
+	public List<BusTransaction> findTransactionByDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		return userDao.findTransactionsByDate(date);
+	}
+
 }
