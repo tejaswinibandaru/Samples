@@ -30,6 +30,7 @@ public interface UserService {
 	public User addUser(User user);
 	public Integer removeUser(Integer userId);
 	public List<User> viewAllUsers();
+	public List<BusTransaction> findTransactionByDate(LocalDate date);
 	
 	
 	
