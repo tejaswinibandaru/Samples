@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="showProduct"  %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="view"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +18,7 @@
 <th>Product Type</th>
 <th>Product Availability</th>
 </tr>
-
-<showProduct:forEach var="product" items="${productdata}">
+<view:forEach var="product" items="${productdata}">
 <tr>
 <td>${product.productId}</td>
 <td>${product.productName}</td>
@@ -28,8 +27,7 @@
 <td>${product.productType}</td>
 <td>${product.online}</td>
 </tr>
-</showProduct:forEach>
-
+</view:forEach>
 </table>
 </body>
 </html>

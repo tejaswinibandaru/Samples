@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cg.employeemanagementsystem.dto.Employee;
@@ -41,6 +42,13 @@ public class EmployeeController {
 	@RequestMapping(value="/search_employee",method = RequestMethod.GET)
 	public String searchEmployee(Integer empId) {
 		return "searchEmployee";
+	}
+	
+	@RequestMapping(value="/searchdata", method=RequestMethod.POST)
+	public ModelAndView searchData(@RequestParam("empId") Integer empId) {
+		Employee employee=employeeservice.searchEmployee(empId);
+		System.out.println(employee);
+		return new ModelAndView("searchEmployee", "data", employee);
 	}
 	
 
