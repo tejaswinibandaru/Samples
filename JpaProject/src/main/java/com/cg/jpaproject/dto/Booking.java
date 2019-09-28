@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Booking {
 	@Id
+
 	private Integer bookingId;
 	@Column
 	private LocalDate dateOfJourney;
@@ -32,11 +34,10 @@ public class Booking {
 	private String bookingStatus;
 	private Integer deleteFlag;
 	
-	static int bookingStaticId=1;
+
 	
 	public Booking() {
-		// TODO Auto-generated constructor stub
-		bookingId=bookingStaticId++;
+		
 	}
 
 	public Booking(Integer bookingId, LocalDate dateOfJourney, Bus bus, List<Passenger> passengers,

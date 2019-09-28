@@ -24,7 +24,7 @@ public interface UserService {
 	public List<BusTransaction> viewAllTransactions();
 	public List<BusTransaction> viewTransactionsByDate(LocalDate date);
 	public BusTransaction viewTransactionById(Integer busTransactionId);
-	public BusTransaction updateTransaction(Integer busTransactionId);
+	public BusTransaction updateTransaction(Integer busTransactionId,Integer passengersCount);
 	
 	
 	public User addUser(User user);

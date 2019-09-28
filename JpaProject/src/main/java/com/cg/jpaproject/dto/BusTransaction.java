@@ -16,7 +16,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class BusTransaction {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer transactionId;
 	@Column
 	private LocalDate date;

@@ -26,10 +26,7 @@ import javax.persistence.Transient;
 @Table(name="bus")
 public class Bus {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer busId;
-	
-	@Column(name="bus_name")
 	private String busName;
 	
 	@Column(name="bus_type")
@@ -58,16 +55,12 @@ public class Bus {
 	@Column(name="end_time")
 	private LocalTime endTime;
 	
-	@Column(name="cost_per_seat")
+	@Column(name="cost")
 	private Double costPerSeat;
 	
-	static int busStaticId=1;
-
 	public Bus() {
 		// TODO Auto-generated constructor stub
-		busId = busStaticId++;
 	}
-
 	public Bus(Integer busId, String busName, String busType, String busClass, String source,
 			String destination, Integer noOfSeats, Integer delete_flag, LocalTime startTime, LocalTime endTime,
 			Double costPerSeat) {

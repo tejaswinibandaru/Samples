@@ -200,12 +200,12 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public BusTransaction updateTransaction(Integer transactionId) {
+	public BusTransaction updateTransaction(Integer transactionId,Integer passengersCount) {
 		// TODO Auto-generated method stub
 		EntityTransaction transaction=entityManager.getTransaction();
 		BusTransaction busTransaction=findTransactionById(transactionId);
+		busTransaction.setAvailableSeats(busTransaction.getAvailableSeats()-passengersCount);
 		busTransaction=entityManager.merge(busTransaction);
-		//busTransaction.setBooking(busTransaction.getBooking());
 		transaction.commit();
 		return busTransaction;
 	}

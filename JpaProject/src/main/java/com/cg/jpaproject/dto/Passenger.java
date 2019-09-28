@@ -3,6 +3,7 @@ package com.cg.jpaproject.dto;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,16 +12,16 @@ import javax.persistence.ManyToOne;
 public class Passenger {
 	
 	@Id
+
 	private Integer passengerId;
 	private String passengerName;
 	private Integer passengerAge;
 	private Character passengerGender;
 	
-	static int passengerStaticId=1;
+
 	
 	public Passenger() {
-		// TODO Auto-generated constructor stub
-		passengerId = passengerStaticId++;
+
 	}
 
 	public Passenger(Integer passengerId, String passengerName, Integer passengerAge, Character passengerGender) {

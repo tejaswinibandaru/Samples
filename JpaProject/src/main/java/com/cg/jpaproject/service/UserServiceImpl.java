@@ -110,9 +110,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public BusTransaction updateTransaction(Integer busTransactionId) {
+	public BusTransaction updateTransaction(Integer busTransactionId,Integer passengersCount) {
 		// TODO Auto-generated method stub
-		return userDao.updateTransaction(busTransactionId);
+		return userDao.updateTransaction(busTransactionId,passengersCount);
 	}
 
 	@Override
