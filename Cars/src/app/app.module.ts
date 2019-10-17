@@ -1,9 +1,8 @@
 ﻿import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent }  from './app.component';
-import { AppProductComponent } from './app.product.component';
-import { ShowProduct} from './app.showproduct.component'
 import {FormsModule} from '@angular/forms'
+import { ShowCarByImage } from './app.showcars';
 
 @NgModule({
     imports: [
@@ -12,7 +11,8 @@ import {FormsModule} from '@angular/forms'
         
     ],
     declarations: [
-        AppComponent,AppProductComponent,ShowProduct
+        AppComponent,
+        ShowCarByImage
 		],
     providers: [ ],
     bootstrap: [AppComponent]
