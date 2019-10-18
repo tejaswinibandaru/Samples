@@ -11,10 +11,10 @@ import {ShowComponent} from '../app/app.showcomponent'
 
 
 const productroute: Routes=[
+    {path:'',redirectTo:'aboutus',pathMatch:'full'},
     {path:'aboutus',component: AboutUsComponent},
     {path:'add',component: ProductComponent},
     {path:'show',component: ShowComponent},
-
 ]
 
 @NgModule({

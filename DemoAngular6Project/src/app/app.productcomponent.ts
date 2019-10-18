@@ -2,6 +2,7 @@ import { Component, OnInit,OnChanges,OnDestroy} from '@angular/core'
 import { ProductService} from './_service/app.productservice';
 import {Product} from './_model/app.product';
 
+
 @Component({
     selector: 'prod',
     templateUrl: 'app.product.html'
@@ -12,6 +13,7 @@ export class ProductComponent {
     constructor(private service:ProductService){
         console.log("In constructor....");
     }
+
     // ngOnChanges(){
     //     console.log("NG On Changes.....");
     // }
@@ -33,5 +35,9 @@ export class ProductComponent {
 
      deleteProduct(index): any {
          this.service.deleteData(index).subscribe(()=>console.log("Product Deleted"));
+     }
+
+     searchProduct(prodId):any{
+         let productdetails:Product[]
      }
 }
