@@ -6,11 +6,8 @@ import {Product} from './_model/app.product';
     selector: 'prod',
     templateUrl: 'app.product.html'
 })
-export class ProductComponent implements OnInit{
-    /*prodId: number;
-    prodName: string;
-    prodPrice: number;*/
-    products: Product[] = [];
+export class ProductComponent {
+    model:any={};
     loadComponent = false;
     constructor(private service:ProductService){
         console.log("In constructor....");
@@ -18,23 +15,23 @@ export class ProductComponent implements OnInit{
     // ngOnChanges(){
     //     console.log("NG On Changes.....");
     // }
-    ngOnInit(): void {
-        console.log("NG On Init....");
-        this.service.getAllData().subscribe((data:Product[]) =>this.products=data);
-     }
+    
     //  ngOnDestroy(){
     //      console.log("NG On Destroy....");
          
-    //  }
-    // addProduct(): any {
-    //     this.products.push({ prodId: this.prodId, prodName: this.prodName, prodPrice: this.prodPrice });
-    // }
+      //}
+     addProduct(): any {
+         //alert("Hello....")
+         console.log(this.model);
+         this.service.addData(this.model).subscribe((data)=>console.log(data));
+
+     }
 
     // updateProduct(index): any {
     //     this.loadComponent=true;
     // }
 
-    // deleteProduct(index): any {
-    //     this.products.splice(index, 1);
-    // }
+     deleteProduct(index): any {
+         this.service.deleteData(index).subscribe(()=>console.log("Product Deleted"));
+     }
 }
