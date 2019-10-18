@@ -1,0 +1,17 @@
+<style>
+    img{
+        height: 300px;
+        width: 400px;
+    }
+</style>
+
+<select #carsList (change)="onSelectImage($event)">
+    <option value="select">Select</option>
+    <option value="bmw">BMW</option>
+    <option value="audi">Audi</option>
+    <option value="i20">i20</option>
+    <option value="alto">Alto</option>
+    <option value="maruti">Maruti</option>
+</select>
+
+<img [src]="pic"/>
