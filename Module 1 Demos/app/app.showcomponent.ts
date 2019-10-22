@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router'
     templateUrl:'app.showproduct.html'
 })
 export class ShowComponent implements OnInit{
+    product:Product;
+   id;
     products: Product[] = [];
     constructor(private service:ProductService){
         console.log("In constructor....");
