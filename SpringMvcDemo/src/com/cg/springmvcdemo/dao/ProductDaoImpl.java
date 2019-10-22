@@ -17,7 +17,6 @@ public class ProductDaoImpl implements ProductDao {
 	
 	@Override
 	public Product save(Product product) {
-		// TODO Auto-generated method stub
 		entityManager.persist(product);
 		return product;
 	}
